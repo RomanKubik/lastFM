@@ -1,15 +1,19 @@
 package com.roman.kubik.lastfm.ui.main.dagger
 
-import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import com.roman.kubik.lastfm.ui.main.IMainViewModel
+import com.roman.kubik.lastfm.ui.main.MainActivity
 import com.roman.kubik.lastfm.ui.main.MainViewModel
 import dagger.Module
 import dagger.Provides
 
 @Module
-abstract class MainModule {
+object MainModule {
 
+    @JvmStatic
     @Provides
-    fun getViewModel(activity: AppCompatActivity) = ViewModelProviders.of(activity).get(MainViewModel::class.java)
+    fun getMainViewModel(activity: MainActivity, factory: ViewModelProvider.Factory): IMainViewModel =
+        ViewModelProviders.of(activity, factory).get(MainViewModel::class.java)
 
 }
