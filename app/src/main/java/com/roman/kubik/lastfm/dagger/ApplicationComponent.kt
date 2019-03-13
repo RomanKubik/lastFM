@@ -10,8 +10,14 @@ import dagger.android.support.AndroidSupportInjectionModule
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [AndroidSupportInjectionModule::class, ApplicationModule::class, ViewModelModule::class])
-interface ApplicationComponent: AndroidInjector<LastFmApp> {
+@Component(
+    modules = [AndroidSupportInjectionModule::class,
+        ApplicationModule::class,
+        ViewModelModule::class,
+        ActivityModule::class,
+        FragmentModule::class]
+)
+interface ApplicationComponent : AndroidInjector<LastFmApp> {
 
     @Component.Builder
     interface Builder {

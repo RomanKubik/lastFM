@@ -2,10 +2,10 @@ package com.roman.kubik.lastfm.ui.main
 
 import android.os.Bundle
 import com.roman.kubik.lastfm.R
-import com.roman.kubik.lastfm.ui.BaseActivity
+import com.roman.kubik.lastfm.ui.base.BaseActivity
 import javax.inject.Inject
 
-class MainActivity: BaseActivity() {
+class MainActivity : BaseActivity() {
 
     @Inject
     lateinit var viewModel: MainViewModel
@@ -16,8 +16,6 @@ class MainActivity: BaseActivity() {
 
         viewModel.toString()
     }
-
-
 
 
 }

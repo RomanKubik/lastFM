@@ -26,7 +26,7 @@ allprojects {
 }
 
 ext {
-    dagger_version = '2.15'
+    dagger_version = '2.16'
     lifecycle_version = '2.0.0'
     room_version = '2.0.0'
     paging_version = "2.1.0"

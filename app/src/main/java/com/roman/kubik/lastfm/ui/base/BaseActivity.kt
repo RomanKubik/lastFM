@@ -1,4 +1,4 @@
-package com.roman.kubik.lastfm.ui
+package com.roman.kubik.lastfm.ui.base
 
 import dagger.android.support.DaggerAppCompatActivity
 
