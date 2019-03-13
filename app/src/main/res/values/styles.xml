@@ -1,11 +1,27 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+    
+    <style name="ListItem">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:paddingLeft">@dimen/default_margin</item>
+        <item name="android:paddingRight">@dimen/default_margin</item>
+        <item name="android:paddingStart">@dimen/default_margin</item>
+        <item name="android:paddingEnd">@dimen/default_margin</item>
+    </style>
 
+    <style name="ListItem.SingleLine" parent="ListItem">
+        <item name="android:paddingTop">@dimen/default_padding</item>
+        <item name="android:paddingBottom">@dimen/default_padding</item>
+    </style>
+    
+    <style name="ListItem.SingleLine.Square">
+        <item name="android:layout_height">@dimen/default_cell_height</item>
+    </style>
 </resources>
