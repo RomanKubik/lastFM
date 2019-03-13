@@ -1,16 +1,14 @@
 package com.roman.kubik.lastfm.ui.main
 
 import android.os.Bundle
-import androidx.lifecycle.ViewModelProvider
 import com.roman.kubik.lastfm.R
-import com.roman.kubik.lastfm.dagger.viewModel.DaggerViewModelFactory
 import com.roman.kubik.lastfm.ui.BaseActivity
 import javax.inject.Inject
 
 class MainActivity: BaseActivity() {
 
     @Inject
-    lateinit var viewModel: IMainViewModel
+    lateinit var viewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
