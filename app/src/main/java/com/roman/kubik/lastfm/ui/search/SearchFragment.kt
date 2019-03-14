@@ -1,9 +1,9 @@
 package com.roman.kubik.lastfm.ui.search
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,12 +26,35 @@ class SearchFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        setupToolbar()
         setupRecyclerView()
         setupObservers()
+    }
 
-        searchList.postDelayed({
-            searchViewModel.search("link")
-        }, 3000)
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_search, menu)
+        val menuItem = menu.findItem(R.id.menu_item_search)
+        val searchView = if (menuItem?.actionView != null) menuItem.actionView as SearchView else null
+        searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                searchViewModel.search(query)
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                return false
+            }
+        })
+    }
+
+    private fun setupToolbar() {
+        if (activity is AppCompatActivity) {
+            val act = activity as AppCompatActivity
+            setHasOptionsMenu(true)
+            act.setSupportActionBar(searchToolbar)
+            act.supportActionBar?.title = getString(R.string.search_artists)
+            act.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        }
     }
 
     private fun setupRecyclerView() {

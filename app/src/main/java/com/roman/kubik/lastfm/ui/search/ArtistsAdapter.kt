@@ -15,6 +15,7 @@ class ArtistsAdapter : RecyclerView.Adapter<ArtistsAdapter.ArtistsHolder>() {
     private val list = ArrayList<Artist>()
 
     fun addArtists(artists: List<Artist>) {
+        list.clear()
         list.addAll(artists)
         notifyDataSetChanged()
     }
