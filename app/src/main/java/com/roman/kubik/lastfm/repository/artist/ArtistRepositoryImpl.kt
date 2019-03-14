@@ -1,4 +1,4 @@
-package com.roman.kubik.lastfm.repository
+package com.roman.kubik.lastfm.repository.artist
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -11,11 +11,11 @@ import retrofit2.Response
 import javax.inject.Inject
 
 
-class ArtistRepository @Inject constructor(private val restService: LastFmRestService) {
+class ArtistRepositoryImpl @Inject constructor(private val restService: LastFmRestService) : ArtistRepository {
 
-    fun getArtists(name: String): LiveData<List<Artist>> {
+    override fun getArtists(name: String): LiveData<List<Artist>> {
         val data = MutableLiveData<List<Artist>>()
-        restService.searchArtists(name, 30, 0).enqueue(object : Callback<ArtistResponse> {
+        restService.searchArtists(name, 30, 1).enqueue(object : Callback<ArtistResponse> {
 
             override fun onResponse(call: Call<ArtistResponse>, response: Response<ArtistResponse>) {
                 if (response.isSuccessful) {

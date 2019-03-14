@@ -16,7 +16,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         // url
-        buildConfigField "String", "URL_API_BASE", "\"http://ws.audioscrobbler.com/\""
+        buildConfigField "String", "URL_API_BASE", "\"https://ws.audioscrobbler.com/\""
     }
     buildTypes {
         release {

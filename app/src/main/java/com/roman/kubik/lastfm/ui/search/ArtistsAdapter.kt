@@ -1,5 +1,6 @@
 package com.roman.kubik.lastfm.ui.search
 
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,9 +34,18 @@ class ArtistsAdapter : RecyclerView.Adapter<ArtistsAdapter.ArtistsHolder>() {
 
     class ArtistsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(artist: Artist) {
-            Picasso.get().load(artist.images.first().url).fit().into(itemView.artistAvatar)
+            val url = artist.images.firstOrNull()?.url
+            Picasso.get()
+                .load(if (TextUtils.isEmpty(url)) INCORRECT_URL else url)
+                .error(R.drawable.ic_music_note)
+                .fit()
+                .into(itemView.artistAvatar)
             itemView.artistName.text = artist.name
         }
 
+    }
+
+    companion object {
+        const val INCORRECT_URL = "dummy.com"
     }
 }

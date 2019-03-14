@@ -10,6 +10,7 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
+import okhttp3.logging.HttpLoggingInterceptor
 
 
 @Module
@@ -20,16 +21,17 @@ class NetworkModule {
     fun getHttpClient(context: Context): OkHttpClient {
         val builder = OkHttpClient.Builder()
 
-        builder.addInterceptor {
-            var request = it.request()
-            val url = request.url()
-                .newBuilder()
-                .addQueryParameter(PARAM_API_KEY, context.getString(R.string.last_fm_api_key))
-                .addQueryParameter(PARAM_FORMAT, PARAM_FORMAT_VALUE)
-                .build()
-            request = request.newBuilder().url(url).build()
-            it.proceed(request)
-        }
+        builder.addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+            .addInterceptor {
+                var request = it.request()
+                val url = request.url()
+                    .newBuilder()
+                    .addQueryParameter(PARAM_API_KEY, context.getString(R.string.last_fm_api_key))
+                    .addQueryParameter(PARAM_FORMAT, PARAM_FORMAT_VALUE)
+                    .build()
+                request = request.newBuilder().url(url).build()
+                it.proceed(request)
+            }
 
         return builder.build()
     }
