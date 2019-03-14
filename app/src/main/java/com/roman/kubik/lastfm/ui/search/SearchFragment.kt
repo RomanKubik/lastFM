@@ -69,7 +69,7 @@ class SearchFragment : BaseFragment() {
 
     private fun setupObservers() {
         searchViewModel.getArtists().observe(this, Observer {
-            adapter.addArtists(it)
+//            adapter.submitList(it)
         })
     }
 }
