@@ -7,7 +7,8 @@ data class ArtistResponse(
 )
 
 data class Results(
-    @SerializedName("artistmatches") val artistMatches: Artists?
+    @SerializedName("artistmatches") val artistMatches: Artists?,
+    @SerializedName("opensearch:totalResults") val totalResults: Int
 )
 
 data class Artists(

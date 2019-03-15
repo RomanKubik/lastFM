@@ -12,7 +12,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            tools:srcCompat="@tools:sample/avatars"/>
+            app:srcCompat="@drawable/ic_music_note"/>
 
     <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/artistName"

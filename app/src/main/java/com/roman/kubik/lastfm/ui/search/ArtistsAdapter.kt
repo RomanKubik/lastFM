@@ -42,6 +42,12 @@ class ArtistsAdapter : PagedListAdapter<Artist, ArtistsAdapter.ArtistsHolder>(
                     .fit()
                     .into(itemView.artistAvatar)
                 itemView.artistName.text = artist.name
+            } else {
+                Picasso.get()
+                    .load(R.drawable.ic_music_note)
+                    .fit()
+                    .into(itemView.artistAvatar)
+                itemView.artistName.text = "Loading..."
             }
         }
 
