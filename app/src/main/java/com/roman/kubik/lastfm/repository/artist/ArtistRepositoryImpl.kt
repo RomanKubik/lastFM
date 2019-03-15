@@ -2,32 +2,31 @@ package com.roman.kubik.lastfm.repository.artist
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.paging.PagedList
 import com.roman.kubik.lastfm.api.LastFmRestService
+import com.roman.kubik.lastfm.api.LastFmRestService.Companion.DEFAULT_PAGE_SIZE
 import com.roman.kubik.lastfm.api.model.Artist
-import com.roman.kubik.lastfm.api.model.ArtistResponse
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.roman.kubik.lastfm.util.MainThreadExecutor
 import javax.inject.Inject
 
 
-class ArtistRepositoryImpl @Inject constructor(private val restService: LastFmRestService) : ArtistRepository {
+class ArtistRepositoryImpl @Inject constructor(private val restService: LastFmRestService, private val executor: MainThreadExecutor) : ArtistRepository {
 
-    override fun getArtists(name: String): LiveData<List<Artist>> {
-        val data = MutableLiveData<List<Artist>>()
-        restService.searchArtists(name, 30, 1).enqueue(object : Callback<ArtistResponse> {
+    override fun getArtists(name: String): LiveData<PagedList<Artist>> {
+        val data = MutableLiveData<PagedList<Artist>>()
+        val dataSource = ArtistDataSource(restService, name)
 
-            override fun onResponse(call: Call<ArtistResponse>, response: Response<ArtistResponse>) {
-                if (response.isSuccessful) {
-                    data.value = response.body()?.results?.artistMatches?.artists
-                }
-            }
+        val config = PagedList.Config.Builder()
+            .setPageSize(DEFAULT_PAGE_SIZE)
+            .setInitialLoadSizeHint(DEFAULT_PAGE_SIZE * 2)
+            .setEnablePlaceholders(true)
+            .build()
 
-            override fun onFailure(call: Call<ArtistResponse>, t: Throwable) {
-                data.value = ArrayList()
-            }
-
-        })
+        val list = PagedList.Builder(dataSource, config)
+            .setNotifyExecutor(executor)
+            .setFetchExecutor(executor)
+            .build()
+        data.value = list
         return data
     }
 }

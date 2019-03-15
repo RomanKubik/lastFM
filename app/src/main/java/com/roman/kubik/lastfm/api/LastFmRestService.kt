@@ -7,7 +7,11 @@ import retrofit2.http.Query
 
 interface LastFmRestService {
 
+    companion object {
+        const val DEFAULT_PAGE_SIZE = 30
+    }
+
     @GET("2.0")
-    fun searchArtists(@Query("artist") artist: String, @Query("limit") limit: Int,
-                      @Query("page") page: Int, @Query("method") method: String = "artist.search") : Call<ArtistResponse>
+    fun searchArtists(@Query("artist") artist: String, @Query("page") page: Int,
+                      @Query("limit") limit: Int = DEFAULT_PAGE_SIZE, @Query("method") method: String = "artist.search") : Call<ArtistResponse>
 }

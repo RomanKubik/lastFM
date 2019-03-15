@@ -9,15 +9,14 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.HttpException
 import retrofit2.Response
-import javax.inject.Inject
 
-class ArtistDataSource @Inject constructor(private val restService: LastFmRestService, private val query: String) :
+class ArtistDataSource constructor(private val restService: LastFmRestService, private val query: String) :
     PageKeyedDataSource<Int, Artist>() {
 
     override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, Artist>) {
         val page = 1
 
-        restService.searchArtists(query, 30, page).enqueue(object : Callback<ArtistResponse> {
+        restService.searchArtists(query, page).enqueue(object : Callback<ArtistResponse> {
 
             override fun onResponse(call: Call<ArtistResponse>, response: Response<ArtistResponse>) {
                 if (response.isSuccessful) {
@@ -41,7 +40,7 @@ class ArtistDataSource @Inject constructor(private val restService: LastFmRestSe
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Artist>) {
         val page = params.key
 
-        restService.searchArtists(query, 30, page).enqueue(object : Callback<ArtistResponse> {
+        restService.searchArtists(query, page).enqueue(object : Callback<ArtistResponse> {
 
             override fun onResponse(call: Call<ArtistResponse>, response: Response<ArtistResponse>) {
                 if (response.isSuccessful) {
