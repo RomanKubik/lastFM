@@ -8,6 +8,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.roman.kubik.lastfm.R
+import com.roman.kubik.lastfm.repository.model.Status
 import com.roman.kubik.lastfm.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_search.*
 import javax.inject.Inject
@@ -70,6 +71,13 @@ class SearchFragment : BaseFragment() {
     private fun setupObservers() {
         searchViewModel.getArtists().observe(this, Observer {
             adapter.submitList(it)
+        })
+        searchViewModel.getNetworkState().observe(this, Observer {
+            when (it.status) {
+                Status.RUNNING -> searchProgress.visibility = View.VISIBLE
+                Status.SUCCESS -> searchProgress.visibility = View.GONE
+                Status.FAILED -> searchProgress.visibility = View.GONE
+            }
         })
     }
 }
