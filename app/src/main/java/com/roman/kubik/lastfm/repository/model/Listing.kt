@@ -1,6 +1,7 @@
 package com.roman.kubik.lastfm.repository.model
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagedList
 
 /**
@@ -10,5 +11,7 @@ data class Listing<T>(
     /** The LiveData of paged lists for the UI to observe. */
     val pagedList: LiveData<PagedList<T>>,
     /** Represents the network request status to show to the user. */
-    val networkState: LiveData<NetworkState>
+    val networkState: LiveData<NetworkState>,
+    /** Represents the database request status to show to the user. */
+    val databaseState: LiveData<DatabaseState> = MutableLiveData()
 )

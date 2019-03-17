@@ -16,3 +16,14 @@ data class NetworkState private constructor(
         fun error(msg: String?) = NetworkState(Status.FAILED, msg)
     }
 }
+
+@Suppress("DataClassPrivateConstructor")
+data class DatabaseState private constructor(
+    val status: Status,
+    val msg: String? = null) {
+    companion object {
+        val LOADED = DatabaseState(Status.SUCCESS)
+        val LOADING = DatabaseState(Status.RUNNING)
+        fun error(msg: String?) = DatabaseState(Status.FAILED, msg)
+    }
+}

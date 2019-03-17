@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagedList
 import com.roman.kubik.lastfm.api.LastFmRestService
 import com.roman.kubik.lastfm.api.LastFmRestService.Companion.DEFAULT_PAGE_SIZE
+import com.roman.kubik.lastfm.persistence.service.PersistenceService
 import com.roman.kubik.lastfm.repository.model.Album
 import com.roman.kubik.lastfm.repository.model.Listing
 import com.roman.kubik.lastfm.util.MainThreadExecutor
@@ -11,7 +12,8 @@ import javax.inject.Inject
 
 class AlbumsRepositoryImpl @Inject constructor(
     private val restService: LastFmRestService,
-    private val executor: MainThreadExecutor
+    private val executor: MainThreadExecutor,
+    private val persistenceService: PersistenceService
 ) : AlbumsRepository {
 
     override fun getTopAlbums(artistId: String): Listing<Album> {
@@ -29,7 +31,7 @@ class AlbumsRepositoryImpl @Inject constructor(
     }
 
     override fun saveAlbum(album: Album) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     override fun removeAlbum(album: Album) {
