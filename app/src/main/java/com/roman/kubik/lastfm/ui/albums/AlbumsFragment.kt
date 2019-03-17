@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.roman.kubik.lastfm.R
 import com.roman.kubik.lastfm.repository.model.Status
 import com.roman.kubik.lastfm.ui.base.BaseFragment
@@ -18,6 +20,8 @@ class AlbumsFragment : BaseFragment() {
     @Inject
     lateinit var albumsViewModel: AlbumsViewModel
 
+    val args: AlbumsFragmentArgs by navArgs()
+
     private val adapter = TopAlbumsAdapter()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -26,8 +30,18 @@ class AlbumsFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        setupView()
         setupRecyclerView()
         setupObservers()
+    }
+
+    private fun setupView() {
+        Glide.with(this)
+            .load(args.artistImage)
+            .error(R.drawable.ic_music_note)
+            .fitCenter()
+            .placeholder(R.drawable.ic_music_note)
+            .into(topAlbumsArtistImage)
     }
 
     private fun setupRecyclerView() {
@@ -42,6 +56,9 @@ class AlbumsFragment : BaseFragment() {
                 Status.SUCCESS -> topAlbumsProgress.visibility = View.GONE
                 Status.FAILED -> topAlbumsProgress.visibility = View.GONE
             }
+        })
+        albumsViewModel.getTopAlbums(args.artistId).observe(this, Observer {
+            adapter.submitList(it)
         })
     }
 

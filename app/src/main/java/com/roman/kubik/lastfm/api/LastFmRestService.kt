@@ -17,6 +17,6 @@ interface LastFmRestService {
                       @Query("limit") limit: Int = DEFAULT_PAGE_SIZE, @Query("method") method: String = "artist.search") : Call<ArtistResponse>
 
     @GET("2.0")
-    fun getTopAlbums(@Query("mbid ") artistId: String, @Query("page") page: Int,
+    fun getTopAlbums(@Query("mbid") artistId: String, @Query("page") page: Int,
                       @Query("limit") limit: Int = DEFAULT_PAGE_SIZE, @Query("method") method: String = "artist.gettopalbums") : Call<TopAlbumsResponse>
 }

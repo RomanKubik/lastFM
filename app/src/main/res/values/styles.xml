@@ -36,8 +36,8 @@
     </style>
 
     <style name="ListActionButton" parent="Clickable">
-        <item name="android:layout_width">24dp</item>
-        <item name="android:layout_height">24dp</item>
+        <item name="android:layout_width">@dimen/list_action_button_size</item>
+        <item name="android:layout_height">@dimen/list_action_button_size</item>
     </style>
 
 </resources>

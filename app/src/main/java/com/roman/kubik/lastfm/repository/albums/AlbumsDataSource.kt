@@ -48,7 +48,7 @@ class AlbumsDataSource constructor(private val restService: LastFmRestService, p
                 if (response.isSuccessful) {
                     val result = response.body()?.topAlbums
 
-                    if (result?.albums != null && result?.attributes != null) {
+                    if (result?.albums != null && result.attributes != null) {
                         consumer.accept(result)
                     } else {
                         onFailure(call, HttpException(response))

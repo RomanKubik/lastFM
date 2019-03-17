@@ -5,18 +5,20 @@ import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.roman.kubik.lastfm.R
+import com.roman.kubik.lastfm.api.model.Artist
 import com.roman.kubik.lastfm.repository.model.Status
 import com.roman.kubik.lastfm.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_search.*
 import javax.inject.Inject
 
 
-class SearchFragment : BaseFragment() {
+class SearchFragment : BaseFragment(), ArtistAdapterCallback {
 
-    private val adapter = ArtistsAdapter()
+    private val adapter = ArtistsAdapter(this)
 
     @Inject
     lateinit var searchViewModel: SearchViewModel
@@ -46,6 +48,11 @@ class SearchFragment : BaseFragment() {
                 return false
             }
         })
+    }
+
+    override fun onArtistSelected(artist: Artist) {
+        val direction = SearchFragmentDirections.actionSearchFragmentToAlbumsFragment(artist.id!!, artist.name, artist.images.firstOrNull()?.url)
+        findNavController().navigate(direction)
     }
 
     private fun setupToolbar() {

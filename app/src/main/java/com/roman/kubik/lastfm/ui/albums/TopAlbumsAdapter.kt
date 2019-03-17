@@ -7,9 +7,10 @@ import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.roman.kubik.lastfm.R
 import com.roman.kubik.lastfm.api.model.Album
-import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.item_artist.view.*
 import kotlinx.android.synthetic.main.item_top_album.view.*
 
 class TopAlbumsAdapter : PagedListAdapter<Album, TopAlbumsAdapter.TopAlbumsHolder>(
@@ -33,24 +34,21 @@ class TopAlbumsAdapter : PagedListAdapter<Album, TopAlbumsAdapter.TopAlbumsHolde
     class TopAlbumsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(album: Album?) {
             if (album != null) {
-                val url = album.images.firstOrNull()?.url
-                Picasso.get()
-                    .load(if (TextUtils.isEmpty(url)) INCORRECT_URL else url)
+                Glide.with(itemView)
+                    .load(album.images.firstOrNull()?.url)
                     .error(R.drawable.ic_music_note)
-                    .fit()
+                    .placeholder(R.drawable.ic_music_note)
+                    .fitCenter()
                     .into(itemView.topAlbumImage)
                 itemView.topAlbumName.text = album.name
             } else {
-                Picasso.get()
+                Glide.with(itemView)
                     .load(R.drawable.ic_music_note)
-                    .fit()
+                    .fitCenter()
                     .into(itemView.topAlbumImage)
                 itemView.topAlbumName.text = itemView.context.getText(R.string.loading)
             }
         }
     }
 
-    companion object {
-        const val INCORRECT_URL = "dummy.com"
-    }
 }

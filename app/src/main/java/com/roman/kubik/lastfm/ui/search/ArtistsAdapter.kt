@@ -1,30 +1,29 @@
 package com.roman.kubik.lastfm.ui.search
 
-import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.roman.kubik.lastfm.R
 import com.roman.kubik.lastfm.api.model.Artist
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_artist.view.*
 
-class ArtistsAdapter : PagedListAdapter<Artist, ArtistsAdapter.ArtistsHolder>(
-    object : DiffUtil.ItemCallback<Artist>() {
-        override fun areItemsTheSame(oldItem: Artist, newItem: Artist) = oldItem.id == newItem.id
+class ArtistsAdapter(private val callback: ArtistAdapterCallback) :
+    PagedListAdapter<Artist, ArtistsAdapter.ArtistsHolder>(
+        object : DiffUtil.ItemCallback<Artist>() {
+            override fun areItemsTheSame(oldItem: Artist, newItem: Artist) = oldItem.id == newItem.id
 
-        override fun areContentsTheSame(oldItem: Artist, newItem: Artist) = oldItem == newItem
-    }
-) {
+            override fun areContentsTheSame(oldItem: Artist, newItem: Artist) = oldItem == newItem
+        }
+    ) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArtistsHolder {
         val inflater = LayoutInflater.from(parent.context)
         val view = inflater.inflate(R.layout.item_artist, parent, false)
-        return ArtistsHolder(view)
+        return ArtistsHolder(view, callback)
     }
 
     override fun onBindViewHolder(holder: ArtistsHolder, position: Int) {
@@ -32,28 +31,37 @@ class ArtistsAdapter : PagedListAdapter<Artist, ArtistsAdapter.ArtistsHolder>(
     }
 
 
-    class ArtistsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ArtistsHolder(itemView: View, private val callback: ArtistAdapterCallback) :
+        RecyclerView.ViewHolder(itemView) {
+
+        private var artist: Artist? = null
+
+        init {
+            itemView.setOnClickListener {
+                artist?.let {
+                    callback.onArtistSelected(it)
+                }
+            }
+        }
+
         fun bind(artist: Artist?) {
+            this.artist = artist
             if (artist != null) {
-                val url = artist.images.firstOrNull()?.url
-                Picasso.get()
-                    .load(if (TextUtils.isEmpty(url)) INCORRECT_URL else url)
+                Glide.with(itemView)
+                    .load(artist.images.firstOrNull()?.url)
                     .error(R.drawable.ic_music_note)
-                    .fit()
+                    .placeholder(R.drawable.ic_music_note)
+                    .fitCenter()
                     .into(itemView.artistAvatar)
                 itemView.artistName.text = artist.name
             } else {
-                Picasso.get()
+                Glide.with(itemView)
                     .load(R.drawable.ic_music_note)
-                    .fit()
+                    .fitCenter()
                     .into(itemView.artistAvatar)
                 itemView.artistName.text = itemView.context.getText(R.string.loading)
             }
         }
-
     }
 
-    companion object {
-        const val INCORRECT_URL = "dummy.com"
-    }
 }
