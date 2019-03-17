@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import androidx.paging.PagedList
-import com.roman.kubik.lastfm.api.model.Artist
+import com.roman.kubik.lastfm.repository.model.Artist
 import com.roman.kubik.lastfm.repository.artist.ArtistRepository
 import com.roman.kubik.lastfm.repository.model.NetworkState
 import javax.inject.Inject

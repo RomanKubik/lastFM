@@ -16,7 +16,8 @@ import javax.inject.Singleton
         ViewModelModule::class,
         ActivityModule::class,
         FragmentModule::class,
-        NetworkModule::class]
+        NetworkModule::class,
+        DatabaseModule::class]
 )
 interface ApplicationComponent : AndroidInjector<LastFmApp> {
 

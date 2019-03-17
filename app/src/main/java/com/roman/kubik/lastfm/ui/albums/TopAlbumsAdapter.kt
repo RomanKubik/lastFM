@@ -1,6 +1,5 @@
 package com.roman.kubik.lastfm.ui.albums
 
-import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,8 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.roman.kubik.lastfm.R
-import com.roman.kubik.lastfm.api.model.Album
-import kotlinx.android.synthetic.main.item_artist.view.*
+import com.roman.kubik.lastfm.repository.model.Album
 import kotlinx.android.synthetic.main.item_top_album.view.*
 
 class TopAlbumsAdapter : PagedListAdapter<Album, TopAlbumsAdapter.TopAlbumsHolder>(
@@ -35,7 +33,7 @@ class TopAlbumsAdapter : PagedListAdapter<Album, TopAlbumsAdapter.TopAlbumsHolde
         fun bind(album: Album?) {
             if (album != null) {
                 Glide.with(itemView)
-                    .load(album.images.firstOrNull()?.url)
+                    .load(album.imagePath)
                     .error(R.drawable.ic_music_note)
                     .placeholder(R.drawable.ic_music_note)
                     .fitCenter()

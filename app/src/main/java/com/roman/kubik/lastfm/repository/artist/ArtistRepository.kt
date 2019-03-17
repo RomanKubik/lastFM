@@ -1,6 +1,6 @@
 package com.roman.kubik.lastfm.repository.artist
 
-import com.roman.kubik.lastfm.api.model.Artist
+import com.roman.kubik.lastfm.repository.model.Artist
 import com.roman.kubik.lastfm.repository.model.Listing
 
 interface ArtistRepository {

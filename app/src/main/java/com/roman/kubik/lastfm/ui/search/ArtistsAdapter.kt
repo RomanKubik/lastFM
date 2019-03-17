@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.roman.kubik.lastfm.R
-import com.roman.kubik.lastfm.api.model.Artist
+import com.roman.kubik.lastfm.repository.model.Artist
 import kotlinx.android.synthetic.main.item_artist.view.*
 
 class ArtistsAdapter(private val callback: ArtistAdapterCallback) :
@@ -48,7 +48,7 @@ class ArtistsAdapter(private val callback: ArtistAdapterCallback) :
             this.artist = artist
             if (artist != null) {
                 Glide.with(itemView)
-                    .load(artist.images.firstOrNull()?.url)
+                    .load(artist.imagePath)
                     .error(R.drawable.ic_music_note)
                     .placeholder(R.drawable.ic_music_note)
                     .fitCenter()

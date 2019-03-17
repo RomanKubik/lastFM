@@ -4,7 +4,9 @@ import androidx.core.util.Consumer
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
 import com.roman.kubik.lastfm.api.LastFmRestService
-import com.roman.kubik.lastfm.api.model.*
+import com.roman.kubik.lastfm.api.model.TopAlbums
+import com.roman.kubik.lastfm.api.model.TopAlbumsResponse
+import com.roman.kubik.lastfm.repository.model.Album
 import com.roman.kubik.lastfm.repository.model.NetworkState
 import retrofit2.Call
 import retrofit2.Callback
@@ -22,7 +24,7 @@ class AlbumsDataSource constructor(private val restService: LastFmRestService, p
 
         loadATopAlbums(page, Consumer {
             networkData.value = NetworkState.LOADED
-            callback.onResult(it.albums, 0, it.attributes!!.total, null, page + 1)
+            callback.onResult(it.albums.map(this::mapToRepositoryModel), 0, it.attributes!!.total, null, page + 1)
         })
     }
 
@@ -30,7 +32,7 @@ class AlbumsDataSource constructor(private val restService: LastFmRestService, p
         val page = params.key
 
         loadATopAlbums(page, Consumer {
-            callback.onResult(it.albums, page + 1)
+            callback.onResult(it.albums.map(this::mapToRepositoryModel),  page + 1)
         })
     }
 
@@ -64,5 +66,11 @@ class AlbumsDataSource constructor(private val restService: LastFmRestService, p
 
         })
     }
+
+    private fun mapToRepositoryModel(album: com.roman.kubik.lastfm.api.model.Album) = Album(
+        album.name ?: "Unknown",
+        album.id ?: "Unknown",
+        album.images.firstOrNull()?.url
+    )
 
 }

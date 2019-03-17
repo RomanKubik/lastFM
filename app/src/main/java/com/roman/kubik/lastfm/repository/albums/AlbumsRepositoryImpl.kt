@@ -4,12 +4,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagedList
 import com.roman.kubik.lastfm.api.LastFmRestService
 import com.roman.kubik.lastfm.api.LastFmRestService.Companion.DEFAULT_PAGE_SIZE
-import com.roman.kubik.lastfm.api.model.Album
+import com.roman.kubik.lastfm.repository.model.Album
 import com.roman.kubik.lastfm.repository.model.Listing
 import com.roman.kubik.lastfm.util.MainThreadExecutor
 import javax.inject.Inject
 
-class AlbumsRepositoryImpl @Inject constructor(private val restService: LastFmRestService, private val executor: MainThreadExecutor) : AlbumsRepository {
+class AlbumsRepositoryImpl @Inject constructor(
+    private val restService: LastFmRestService,
+    private val executor: MainThreadExecutor
+) : AlbumsRepository {
 
     override fun getTopAlbums(artistId: String): Listing<Album> {
         val data = MutableLiveData<PagedList<Album>>()
@@ -23,6 +26,14 @@ class AlbumsRepositoryImpl @Inject constructor(private val restService: LastFmRe
         data.value = list
 
         return Listing(data, dataSource.getNetworkState())
+    }
+
+    override fun saveAlbum(album: Album) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun removeAlbum(album: Album) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     private fun getAlbumsPagedListConfig(): PagedList.Config {

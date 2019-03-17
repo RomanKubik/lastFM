@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagedList
 import com.roman.kubik.lastfm.api.LastFmRestService
 import com.roman.kubik.lastfm.api.LastFmRestService.Companion.DEFAULT_PAGE_SIZE
-import com.roman.kubik.lastfm.api.model.Artist
+import com.roman.kubik.lastfm.repository.model.Artist
 import com.roman.kubik.lastfm.repository.model.Listing
 import com.roman.kubik.lastfm.util.MainThreadExecutor
 import javax.inject.Inject
