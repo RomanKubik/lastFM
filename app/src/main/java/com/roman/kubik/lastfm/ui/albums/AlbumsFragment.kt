@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide
 import com.roman.kubik.lastfm.R
 import com.roman.kubik.lastfm.repository.model.Status
 import com.roman.kubik.lastfm.ui.base.BaseFragment
+import com.roman.kubik.lastfm.ui.utils.GridColumnDecorator
 import kotlinx.android.synthetic.main.fragment_top_albums.*
 import javax.inject.Inject
 
@@ -20,7 +21,7 @@ class AlbumsFragment : BaseFragment() {
     @Inject
     lateinit var albumsViewModel: AlbumsViewModel
 
-    val args: AlbumsFragmentArgs by navArgs()
+    private val args: AlbumsFragmentArgs by navArgs()
 
     private val adapter = TopAlbumsAdapter()
 
@@ -45,8 +46,10 @@ class AlbumsFragment : BaseFragment() {
     }
 
     private fun setupRecyclerView() {
+        val decorator = GridColumnDecorator(resources.getDimensionPixelSize(R.dimen.default_padding_tiny))
         topAlbumsList.layoutManager = GridLayoutManager(context, COLUMNS_COUNT, RecyclerView.VERTICAL, false)
         topAlbumsList.adapter = adapter
+        topAlbumsList.addItemDecoration(decorator)
     }
 
     private fun setupObservers() {
