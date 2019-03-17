@@ -17,7 +17,7 @@ class ArtistsAdapter : PagedListAdapter<Artist, ArtistsAdapter.ArtistsHolder>(
     object : DiffUtil.ItemCallback<Artist>() {
         override fun areItemsTheSame(oldItem: Artist, newItem: Artist) = oldItem.id == newItem.id
 
-        override fun areContentsTheSame(oldItem: Artist, newItem: Artist) = oldItem.equals(newItem)
+        override fun areContentsTheSame(oldItem: Artist, newItem: Artist) = oldItem == newItem
     }
 ) {
 
@@ -47,7 +47,7 @@ class ArtistsAdapter : PagedListAdapter<Artist, ArtistsAdapter.ArtistsHolder>(
                     .load(R.drawable.ic_music_note)
                     .fit()
                     .into(itemView.artistAvatar)
-                itemView.artistName.text = "Loading..."
+                itemView.artistName.text = itemView.context.getText(R.string.loading)
             }
         }
 

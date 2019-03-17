@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">LastFM</string>
 
+    <!-- Common strings-->
+    <string name="loading">Loading…</string>
+
     <!-- Strings related to search screen-->
     <string name="search_menu_item_search">Search</string>
     <string name="search_artists">Search artists</string>

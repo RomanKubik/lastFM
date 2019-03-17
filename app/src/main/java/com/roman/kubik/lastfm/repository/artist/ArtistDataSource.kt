@@ -1,6 +1,5 @@
 package com.roman.kubik.lastfm.repository.artist
 
-import android.util.Log
 import androidx.core.util.Consumer
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource

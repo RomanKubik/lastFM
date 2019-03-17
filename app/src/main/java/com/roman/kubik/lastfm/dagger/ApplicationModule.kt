@@ -1,5 +1,7 @@
 package com.roman.kubik.lastfm.dagger
 
+import com.roman.kubik.lastfm.repository.albums.AlbumsRepository
+import com.roman.kubik.lastfm.repository.albums.AlbumsRepositoryImpl
 import com.roman.kubik.lastfm.repository.artist.ArtistRepository
 import com.roman.kubik.lastfm.repository.artist.ArtistRepositoryImpl
 import dagger.Binds
@@ -13,4 +15,7 @@ interface ApplicationModule {
     @Singleton
     fun getArtistRepository(artistRepositoryImpl: ArtistRepositoryImpl): ArtistRepository
 
+    @Binds
+    @Singleton
+    fun getAlbumsRepository(albumsRepository: AlbumsRepositoryImpl): AlbumsRepository
 }

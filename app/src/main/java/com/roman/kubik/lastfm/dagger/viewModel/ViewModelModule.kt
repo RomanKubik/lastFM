@@ -2,6 +2,7 @@ package com.roman.kubik.lastfm.dagger.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.roman.kubik.lastfm.ui.albums.AlbumsViewModelImpl
 import com.roman.kubik.lastfm.ui.main.MainViewModelImpl
 import com.roman.kubik.lastfm.ui.search.SearchViewModelImpl
 import dagger.Binds
@@ -21,6 +22,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(SearchViewModelImpl::class)
     abstract fun bindSearchViewModel(viewModel: SearchViewModelImpl): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(AlbumsViewModelImpl::class)
+    abstract fun bindAlbumsViewModel(viewModel: AlbumsViewModelImpl): ViewModel
 
     @Binds
     @Singleton

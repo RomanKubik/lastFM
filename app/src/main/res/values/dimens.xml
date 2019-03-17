@@ -9,4 +9,5 @@
     <dimen name="default_cell_height">72dp</dimen>
     <dimen name="default_square_image_size">56dp</dimen>
 
+    <dimen name="default_raw_item_height">200dp</dimen>
 </resources>
