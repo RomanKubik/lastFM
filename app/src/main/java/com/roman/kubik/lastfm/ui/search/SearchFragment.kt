@@ -52,7 +52,7 @@ class SearchFragment : BaseFragment(), ArtistAdapterCallback {
 
     override fun onArtistSelected(artist: Artist) {
         val direction =
-            SearchFragmentDirections.actionSearchFragmentToAlbumsFragment(artist.id, artist.name, artist.imagePath)
+            SearchFragmentDirections.actionSearchFragmentToAlbumsFragment(artist)
         findNavController().navigate(direction)
     }
 

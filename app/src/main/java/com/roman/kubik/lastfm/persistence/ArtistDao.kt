@@ -8,7 +8,6 @@ import androidx.room.OnConflictStrategy.IGNORE
 import androidx.room.Query
 import com.roman.kubik.lastfm.persistence.model.Album
 import com.roman.kubik.lastfm.persistence.model.Artist
-import com.roman.kubik.lastfm.persistence.model.DeepArtist
 
 @Dao
 interface ArtistDao {
@@ -25,6 +24,4 @@ interface ArtistDao {
     @Delete
     fun deleteArtist(artist: Artist)
 
-    @Query("SELECT * FROM artist INNER JOIN album ON album.artistId = artist.id INNER JOIN track ON track.albumId = album.id WHERE artist.id = :id")
-    fun getArtist(id: String): LiveData<DeepArtist>
 }

@@ -11,25 +11,42 @@ import com.roman.kubik.lastfm.R
 import com.roman.kubik.lastfm.repository.model.Album
 import kotlinx.android.synthetic.main.item_top_album.view.*
 
-class TopAlbumsAdapter : PagedListAdapter<Album, TopAlbumsAdapter.TopAlbumsHolder>(
-    object : DiffUtil.ItemCallback<Album>() {
-        override fun areItemsTheSame(oldItem: Album, newItem: Album) = oldItem.id == newItem.id
+class TopAlbumsAdapter(private val callback: TopAlbumsAdapterCallback) :
+    PagedListAdapter<Album, TopAlbumsAdapter.TopAlbumsHolder>(
+        object : DiffUtil.ItemCallback<Album>() {
+            override fun areItemsTheSame(oldItem: Album, newItem: Album) = oldItem.id == newItem.id
 
-        override fun areContentsTheSame(oldItem: Album, newItem: Album) = oldItem == newItem
-    }
-) {
+            override fun areContentsTheSame(oldItem: Album, newItem: Album) = oldItem == newItem
+        }
+    ) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TopAlbumsHolder {
         val inflater = LayoutInflater.from(parent.context)
         val view = inflater.inflate(R.layout.item_top_album, parent, false)
-        return TopAlbumsHolder(view)
+        return TopAlbumsHolder(view, callback)
     }
 
     override fun onBindViewHolder(holder: TopAlbumsHolder, position: Int) {
         holder.bind(getItem(position))
     }
 
-    class TopAlbumsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class TopAlbumsHolder(itemView: View, callback: TopAlbumsAdapterCallback) : RecyclerView.ViewHolder(itemView) {
+
+        private var album: Album? = null
+
+        init {
+            itemView.setOnClickListener {
+                album?.let {
+                    callback.onAlbumSelected(it)
+                }
+            }
+            itemView.topAlbumItemStarred.setOnClickListener {
+                album?.let {
+                    callback.onAlbumSelected(it)
+                }
+            }
+        }
+
         fun bind(album: Album?) {
             if (album != null) {
                 Glide.with(itemView)

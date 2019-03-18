@@ -10,20 +10,21 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.roman.kubik.lastfm.R
+import com.roman.kubik.lastfm.repository.model.Album
 import com.roman.kubik.lastfm.repository.model.Status
 import com.roman.kubik.lastfm.ui.base.BaseFragment
 import com.roman.kubik.lastfm.ui.utils.GridColumnDecorator
 import kotlinx.android.synthetic.main.fragment_top_albums.*
 import javax.inject.Inject
 
-class AlbumsFragment : BaseFragment() {
+class AlbumsFragment : BaseFragment(), TopAlbumsAdapterCallback {
 
     @Inject
     lateinit var albumsViewModel: AlbumsViewModel
 
     private val args: AlbumsFragmentArgs by navArgs()
 
-    private val adapter = TopAlbumsAdapter()
+    private val adapter = TopAlbumsAdapter(this)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_top_albums, container, false)
@@ -36,9 +37,23 @@ class AlbumsFragment : BaseFragment() {
         setupObservers()
     }
 
+    override fun onAlbumSelected(album: Album) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onAlbumLiked(album: Album) {
+        albumsViewModel.saveAlbum(album).observe(this, Observer {
+            when (it.status) {
+                Status.RUNNING -> topAlbumsProgress.visibility = View.VISIBLE
+                Status.SUCCESS -> topAlbumsProgress.visibility = View.GONE
+                Status.FAILED -> topAlbumsProgress.visibility = View.GONE
+            }
+        })
+    }
+
     private fun setupView() {
         Glide.with(this)
-            .load(args.artistImage)
+            .load(args.artist.imagePath)
             .error(R.drawable.ic_music_note)
             .fitCenter()
             .placeholder(R.drawable.ic_music_note)
@@ -60,7 +75,7 @@ class AlbumsFragment : BaseFragment() {
                 Status.FAILED -> topAlbumsProgress.visibility = View.GONE
             }
         })
-        albumsViewModel.getTopAlbums(args.artistId).observe(this, Observer {
+        albumsViewModel.getTopAlbums(args.artist).observe(this, Observer {
             adapter.submitList(it)
         })
     }

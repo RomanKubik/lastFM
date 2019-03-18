@@ -6,6 +6,7 @@ import androidx.paging.PageKeyedDataSource
 import com.roman.kubik.lastfm.api.LastFmRestService
 import com.roman.kubik.lastfm.api.model.TopAlbums
 import com.roman.kubik.lastfm.api.model.TopAlbumsResponse
+import com.roman.kubik.lastfm.persistence.AlbumDao
 import com.roman.kubik.lastfm.repository.model.Album
 import com.roman.kubik.lastfm.repository.model.NetworkState
 import retrofit2.Call
@@ -13,7 +14,7 @@ import retrofit2.Callback
 import retrofit2.HttpException
 import retrofit2.Response
 
-class AlbumsDataSource constructor(private val restService: LastFmRestService, private val id: String) :
+class AlbumsDataSource constructor(private val restService: LastFmRestService, private val albumDao: AlbumDao, private val id: String) :
     PageKeyedDataSource<Int, Album>() {
 
     private val networkData = MutableLiveData<NetworkState>()
@@ -22,7 +23,7 @@ class AlbumsDataSource constructor(private val restService: LastFmRestService, p
         networkData.value = NetworkState.LOADING
         val page = 1
 
-        loadATopAlbums(page, Consumer {
+        loadTopAlbums(page, Consumer {
             networkData.value = NetworkState.LOADED
             callback.onResult(it.albums.map(this::mapToRepositoryModel), 0, it.attributes!!.total, null, page + 1)
         })
@@ -31,7 +32,7 @@ class AlbumsDataSource constructor(private val restService: LastFmRestService, p
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Album>) {
         val page = params.key
 
-        loadATopAlbums(page, Consumer {
+        loadTopAlbums(page, Consumer {
             callback.onResult(it.albums.map(this::mapToRepositoryModel),  page + 1)
         })
     }
@@ -43,7 +44,7 @@ class AlbumsDataSource constructor(private val restService: LastFmRestService, p
 
     fun getNetworkState() = networkData
 
-    private fun loadATopAlbums(page: Int, consumer: Consumer<TopAlbums>) {
+    private fun loadTopAlbums(page: Int, consumer: Consumer<TopAlbums>) {
         restService.getTopAlbums(id, page).enqueue(object : Callback<TopAlbumsResponse> {
 
             override fun onResponse(call: Call<TopAlbumsResponse>, response: Response<TopAlbumsResponse>) {
