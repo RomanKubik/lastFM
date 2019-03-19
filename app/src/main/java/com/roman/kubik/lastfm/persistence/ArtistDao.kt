@@ -8,6 +8,7 @@ import androidx.room.OnConflictStrategy.IGNORE
 import androidx.room.Query
 import com.roman.kubik.lastfm.persistence.model.AlbumEntity
 import com.roman.kubik.lastfm.persistence.model.ArtistEntity
+import com.roman.kubik.lastfm.persistence.model.TrackEntity
 
 @Dao
 interface ArtistDao {
@@ -19,7 +20,7 @@ interface ArtistDao {
     fun insertArtist(artist: ArtistEntity)
 
     @Insert(onConflict = IGNORE)
-    fun insertArtistAndAlbum(artist: ArtistEntity, album: AlbumEntity)
+    fun insertArtistAlbumAndTracks(artist: ArtistEntity, album: AlbumEntity, tracks: List<TrackEntity>)
 
     @Delete
     fun deleteArtist(artist: ArtistEntity)

@@ -44,13 +44,13 @@ class AlbumsFragment : BaseFragment(), TopAlbumsAdapterCallback {
     }
 
     override fun onAlbumLiked(album: Album) {
-        albumsViewModel.saveAlbum(album).observe(this, Observer {
-            when (it.status) {
-                Status.RUNNING -> topAlbumsProgress.visibility = View.VISIBLE
-                Status.SUCCESS -> topAlbumsProgress.visibility = View.GONE
-                Status.FAILED -> topAlbumsProgress.visibility = View.GONE
-            }
-        })
+//        albumsViewModel.saveAlbum(album).observe(this, Observer {
+//            when (it.status) {
+//                Status.RUNNING -> topAlbumsProgress.visibility = View.VISIBLE
+//                Status.SUCCESS -> topAlbumsProgress.visibility = View.GONE
+//                Status.FAILED -> topAlbumsProgress.visibility = View.GONE
+//            }
+//        })
     }
 
     private fun setupView() {

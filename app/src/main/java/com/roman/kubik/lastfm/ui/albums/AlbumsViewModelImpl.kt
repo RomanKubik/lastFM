@@ -24,8 +24,12 @@ class AlbumsViewModelImpl @Inject constructor(private val albumRepository: Album
 
     override fun getNetworkState(): LiveData<NetworkState> = networkData
 
-    override fun saveAlbum(album: Album) = albumRepository.saveAlbum(album)
+    override fun saveAlbum(album: Album) {
+        albumRepository.saveAlbum(album)
+    }
 
-    override fun deleteAlbum(album: Album) = albumRepository.deleteAlbum(album)
+    override fun deleteAlbum(album: Album) {
+        albumRepository.deleteAlbum(album)
+    }
 
 }

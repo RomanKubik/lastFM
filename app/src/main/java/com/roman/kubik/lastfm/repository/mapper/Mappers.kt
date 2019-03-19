@@ -74,3 +74,9 @@ fun TrackEntity.toTrack() = Track(id, name, duration, albumId)
 fun AlbumEntity.toAlbum() = Album(name, id, imagePath, null, true)
 
 fun ArtistEntity.toArtist() = Artist(name, id, imagePath)
+
+fun Track.toTrackEntity() = TrackEntity(id, name, duration, albumId)
+
+fun Album.toAlbumEntity() = AlbumEntity(id, name, imagePath, artist!!.id)
+
+fun Artist.toArtistEntity() = ArtistEntity(id, name, imagePath)

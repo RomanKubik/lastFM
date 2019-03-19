@@ -14,10 +14,13 @@ interface AlbumDao {
     fun getAllAlbums(): LiveData<List<AlbumEntity>>
 
     @Query("SELECT * FROM album WHERE artistId = :artistId")
-    fun getArtistAlbum(artistId: String): LiveData<List<AlbumEntity>>
+    fun getArtistAlbums(artistId: String): LiveData<List<AlbumEntity>>
 
     @Query("SELECT * FROM album WHERE id = :id")
     fun getAlbumById(id: String): LiveData<AlbumEntity>
+
+    @Query("SELECT * FROM album WHERE artistId = :artistId")
+    fun getArtistAlbumsSync(artistId: String): List<AlbumEntity>
 
     @Insert
     fun insertAlbum(album: AlbumEntity)

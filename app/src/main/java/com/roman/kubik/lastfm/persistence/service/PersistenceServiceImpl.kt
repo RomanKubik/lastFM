@@ -2,20 +2,16 @@ package com.roman.kubik.lastfm.persistence.service
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import com.roman.kubik.lastfm.persistence.AlbumDao
 import com.roman.kubik.lastfm.persistence.ArtistDao
 import com.roman.kubik.lastfm.persistence.TrackDao
 import com.roman.kubik.lastfm.persistence.model.AlbumEntity
 import com.roman.kubik.lastfm.persistence.model.ArtistEntity
 import com.roman.kubik.lastfm.persistence.model.TrackEntity
-import com.roman.kubik.lastfm.repository.mapper.toAlbum
-import com.roman.kubik.lastfm.repository.mapper.toArtist
-import com.roman.kubik.lastfm.repository.mapper.toTrack
+import com.roman.kubik.lastfm.repository.mapper.*
 import com.roman.kubik.lastfm.repository.model.Album
 import com.roman.kubik.lastfm.repository.model.Artist
-import com.roman.kubik.lastfm.repository.model.DatabaseState
+import com.roman.kubik.lastfm.repository.model.Track
 import java.util.concurrent.Executors
 import javax.inject.Inject
 
@@ -27,24 +23,26 @@ class PersistenceServiceImpl @Inject constructor(
     PersistenceService {
 
     private val executor = Executors.newSingleThreadExecutor()
-    private val data = MutableLiveData<DatabaseState>()
 
-    override fun saveAlbum(album: Album): LiveData<DatabaseState> {
-        data.value = DatabaseState.LOADING
+    override fun saveAlbum(album: Album) {
         executor.execute {
-            artistDao.insertArtistAndAlbum(mapToDbEntity(album.artist!!), mapToDbEntity(album, album.artist!!))
-            data.postValue(DatabaseState.LOADED)
+            album.artist?.let { artist ->
+                artistDao.insertArtistAlbumAndTracks(
+                    artist.toArtistEntity(),
+                    album.toAlbumEntity(),
+                    album.tracks.map(Track::toTrackEntity)
+                )
+            }
         }
-        return data
     }
 
-    override fun deleteAlbum(album: Album): LiveData<DatabaseState> {
-        data.value = DatabaseState.LOADING
+    override fun deleteAlbum(album: Album) {
         executor.execute {
-            albumDao.deleteAlbum(mapToDbEntity(album, album.artist!!))
-            data.value = DatabaseState.LOADED
+            albumDao.deleteAlbum(album.toAlbumEntity())
+            if (albumDao.getArtistAlbumsSync(album.artist!!.id).isNullOrEmpty()) {
+                artistDao.deleteArtist(album.artist.toArtistEntity())
+            }
         }
-        return data
     }
 
     override fun getAlbum(album: Album): LiveData<Album?> {
@@ -65,18 +63,4 @@ class PersistenceServiceImpl @Inject constructor(
         }
         return data
     }
-
-    private fun mapToDbEntity(album: Album, artist: Artist) =
-        AlbumEntity(album.id, album.name, album.imagePath, artist.id)
-
-    private fun mapToDbEntity(artist: Artist) = ArtistEntity(artist.id, artist.name, artist.imagePath)
-    private fun mapFromDbEntity(album: AlbumEntity?): Album? {
-        return if (album != null) {
-            Album(album.id, album.name, album.imagePath, null, true)
-        } else {
-            null
-        }
-    }
-
-    private fun mapFromDbEntity(artist: ArtistEntity) = Artist(artist.id, artist.name, artist.imagePath)
 }

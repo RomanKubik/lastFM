@@ -42,7 +42,9 @@ class AlbumRepositoryImpl @Inject constructor(
 
     override fun getAlbumDetails(album: Album): LiveData<Album> {
         val albumData = MediatorLiveData<Album>()
-        albumData.addSource(persistenceService.getAlbum(album)){
+        val repositoryData = persistenceService.getAlbum(album)
+        albumData.addSource(repositoryData){
+            albumData.removeSource(repositoryData)
             if (it != null) {
                 albumData.value = it
             } else {
@@ -54,10 +56,14 @@ class AlbumRepositoryImpl @Inject constructor(
         return albumData
     }
 
-    override fun saveAlbum(album: Album) = persistenceService.saveAlbum(album)
+    override fun saveAlbum(album: Album) {
+        persistenceService.saveAlbum(album)
+    }
 
 
-    override fun deleteAlbum(album: Album) = persistenceService.deleteAlbum(album)
+    override fun deleteAlbum(album: Album) {
+        persistenceService.deleteAlbum(album)
+    }
 
 
     private fun getAlbumsPagedListConfig(): PagedList.Config {

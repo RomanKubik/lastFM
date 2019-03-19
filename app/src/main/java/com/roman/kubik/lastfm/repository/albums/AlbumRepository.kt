@@ -12,8 +12,8 @@ interface AlbumRepository {
 
     fun getAlbumDetails(album: Album): LiveData<Album>
 
-    fun saveAlbum(album: Album): LiveData<DatabaseState>
+    fun saveAlbum(album: Album)
 
-    fun deleteAlbum(album: Album): LiveData<DatabaseState>
+    fun deleteAlbum(album: Album)
 
 }
