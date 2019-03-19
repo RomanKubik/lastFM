@@ -14,6 +14,4 @@ interface AlbumsViewModel {
     fun getNetworkState(): LiveData<NetworkState>
 
     fun saveAlbum(album: Album)
-
-    fun deleteAlbum(album: Album)
 }

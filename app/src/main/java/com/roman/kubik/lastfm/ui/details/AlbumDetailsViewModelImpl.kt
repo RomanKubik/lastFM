@@ -13,7 +13,7 @@ class AlbumDetailsViewModelImpl @Inject constructor(
     private val albumRepository: AlbumRepository
 ) : ViewModel(), AlbumDetailsViewModel {
 
-    private var albumData = MediatorLiveData<Album>()
+    private val albumData = MediatorLiveData<Album>()
 
     override fun getAlbumDetails(album: Album): LiveData<Album> {
         albumData.addSource(albumRepository.getAlbumDetails(album)) {

@@ -43,6 +43,8 @@ class TopAlbumsAdapter(private val callback: TopAlbumsAdapterCallback) :
             itemView.topAlbumItemStarred.setOnClickListener {
                 album?.let {
                     callback.onAlbumLiked(it)
+                    itemView.topAlbumItemStarred.setImageResource(if (!it.isLiked) R.drawable.ic_star else R.drawable.ic_star_border)
+                    album = it.copy(isLiked = !it.isLiked)
                 }
             }
         }
@@ -57,6 +59,7 @@ class TopAlbumsAdapter(private val callback: TopAlbumsAdapterCallback) :
                     .fitCenter()
                     .into(itemView.topAlbumImage)
                 itemView.topAlbumName.text = album.name
+                itemView.topAlbumItemStarred.setImageResource(if (album.isLiked) R.drawable.ic_star else R.drawable.ic_star_border)
             } else {
                 Glide.with(itemView)
                     .load(R.drawable.ic_music_note)

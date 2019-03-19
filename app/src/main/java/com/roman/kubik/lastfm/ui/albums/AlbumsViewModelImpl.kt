@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 class AlbumsViewModelImpl @Inject constructor(private val albumRepository: AlbumRepository): ViewModel(), AlbumsViewModel {
 
-    private var networkData = MediatorLiveData<NetworkState>()
+    private val networkData = MediatorLiveData<NetworkState>()
 
     override fun getTopAlbums(artist: Artist): LiveData<PagedList<Album>> {
         val response = albumRepository.getTopAlbums(artist)
@@ -25,11 +25,11 @@ class AlbumsViewModelImpl @Inject constructor(private val albumRepository: Album
     override fun getNetworkState(): LiveData<NetworkState> = networkData
 
     override fun saveAlbum(album: Album) {
-        albumRepository.saveAlbum(album)
-    }
-
-    override fun deleteAlbum(album: Album) {
-        albumRepository.deleteAlbum(album)
+        if (album.isLiked) {
+            albumRepository.deleteAlbum(album)
+        } else {
+            albumRepository.saveAlbum(album)
+        }
     }
 
 }

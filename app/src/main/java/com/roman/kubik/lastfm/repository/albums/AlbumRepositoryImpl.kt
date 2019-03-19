@@ -1,5 +1,6 @@
 package com.roman.kubik.lastfm.repository.albums
 
+import androidx.core.util.Consumer
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
@@ -43,28 +44,30 @@ class AlbumRepositoryImpl @Inject constructor(
     override fun getAlbumDetails(album: Album): LiveData<Album> {
         val albumData = MediatorLiveData<Album>()
         val repositoryData = persistenceService.getAlbum(album)
-        albumData.addSource(repositoryData){
+        albumData.addSource(repositoryData) {
             albumData.removeSource(repositoryData)
             if (it != null) {
                 albumData.value = it
             } else {
-                albumData.addSource(performNetworkCall(album)) { a ->
+                fetchTracks(album, Consumer { a ->
                     albumData.value = a
-                }
+                })
             }
         }
         return albumData
     }
 
     override fun saveAlbum(album: Album) {
-        persistenceService.saveAlbum(album)
+        if (album.tracks.isNullOrEmpty()) {
+            fetchTracks(album, Consumer { persistenceService.saveAlbum(it) })
+        } else {
+            persistenceService.saveAlbum(album)
+        }
     }
-
 
     override fun deleteAlbum(album: Album) {
         persistenceService.deleteAlbum(album)
     }
-
 
     private fun getAlbumsPagedListConfig(): PagedList.Config {
         return PagedList.Config.Builder()
@@ -74,8 +77,7 @@ class AlbumRepositoryImpl @Inject constructor(
             .build()
     }
 
-    private fun performNetworkCall(album: Album): LiveData<Album> {
-        val data = MutableLiveData<Album>()
+    private fun fetchTracks(album: Album, result: Consumer<Album>) {
         restService.getAlbumInfo(album.id).enqueue(object : Callback<AlbumInfoResponse> {
             override fun onFailure(call: Call<AlbumInfoResponse>, t: Throwable) {
                 System.out.print("error")
@@ -84,14 +86,12 @@ class AlbumRepositoryImpl @Inject constructor(
             override fun onResponse(call: Call<AlbumInfoResponse>, response: Response<AlbumInfoResponse>) {
                 val r = response.body()?.albumModel?.toAlbum(album.artist)
                 if (r != null) {
-                    data.value = r
+                    result.accept(r)
                 } else {
                     onFailure(call, HttpException(response))
                 }
             }
 
         })
-        return data
     }
-
 }
