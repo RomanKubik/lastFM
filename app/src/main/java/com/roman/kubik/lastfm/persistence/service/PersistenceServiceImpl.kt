@@ -2,7 +2,6 @@ package com.roman.kubik.lastfm.persistence.service
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.Transformations
 import com.roman.kubik.lastfm.persistence.AlbumDao
 import com.roman.kubik.lastfm.persistence.ArtistDao
 import com.roman.kubik.lastfm.persistence.TrackDao
@@ -60,16 +59,16 @@ class PersistenceServiceImpl @Inject constructor(
 
     override fun getSavedAlbums(): LiveData<List<Album>> {
         val data = MediatorLiveData<List<Album>>()
-        data.addSource(albumDao.getAllAlbums()) {
-            if (!it.isNullOrEmpty()) {
-                val result = ArrayList<Album>()
-                for (album in it) {
-                    val source = artistDao.getArtistById(album.artistId)
-                    data.addSource(source) { artist ->
-                        data.removeSource(source)
-                        result.add(album.toAlbum(artist))
-                        data.value = result
+        data.addSource(artistDao.getAllArtists()) { artists ->
+            if (!artists.isNullOrEmpty()) {
+                data.addSource(albumDao.getAllAlbums()) { albums ->
+                    val result = ArrayList<Album>()
+                    for (ar in artists) {
+                        for (al in albums.filter { it.artistId == ar.id }) {
+                            result.add(al.toAlbum(ar))
+                        }
                     }
+                    data.postValue(result)
                 }
             }
         }
@@ -114,4 +113,5 @@ class PersistenceServiceImpl @Inject constructor(
             }
         }
     }
+
 }
