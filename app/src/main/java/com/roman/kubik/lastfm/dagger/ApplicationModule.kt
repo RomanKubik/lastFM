@@ -2,8 +2,8 @@ package com.roman.kubik.lastfm.dagger
 
 import com.roman.kubik.lastfm.persistence.service.PersistenceService
 import com.roman.kubik.lastfm.persistence.service.PersistenceServiceImpl
-import com.roman.kubik.lastfm.repository.albums.AlbumsRepository
-import com.roman.kubik.lastfm.repository.albums.AlbumsRepositoryImpl
+import com.roman.kubik.lastfm.repository.albums.AlbumRepository
+import com.roman.kubik.lastfm.repository.albums.AlbumRepositoryImpl
 import com.roman.kubik.lastfm.repository.artist.ArtistRepository
 import com.roman.kubik.lastfm.repository.artist.ArtistRepositoryImpl
 import dagger.Binds
@@ -19,7 +19,7 @@ interface ApplicationModule {
 
     @Binds
     @Singleton
-    fun getAlbumsRepository(albumsRepository: AlbumsRepositoryImpl): AlbumsRepository
+    fun getAlbumsRepository(albumsRepository: AlbumRepositoryImpl): AlbumRepository
 
     @Binds
     @Singleton

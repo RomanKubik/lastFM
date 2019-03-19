@@ -6,12 +6,14 @@ import com.roman.kubik.lastfm.repository.model.Artist
 import com.roman.kubik.lastfm.repository.model.DatabaseState
 import com.roman.kubik.lastfm.repository.model.Listing
 
-interface AlbumsRepository {
+interface AlbumRepository {
 
-    fun getTopAlbums(artistId: String): Listing<Album>
+    fun getTopAlbums(artist: Artist): Listing<Album>
 
-    fun saveAlbum(artist: Artist, album: Album): LiveData<DatabaseState>
+    fun getAlbumDetails(album: Album): LiveData<Album>
 
-    fun deleteAlbum(artist: Artist, album: Album): LiveData<DatabaseState>
+    fun saveAlbum(album: Album): LiveData<DatabaseState>
+
+    fun deleteAlbum(album: Album): LiveData<DatabaseState>
 
 }

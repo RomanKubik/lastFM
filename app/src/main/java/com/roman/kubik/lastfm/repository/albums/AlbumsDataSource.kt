@@ -7,15 +7,16 @@ import com.roman.kubik.lastfm.api.LastFmRestService
 import com.roman.kubik.lastfm.api.model.AlbumModel
 import com.roman.kubik.lastfm.api.model.TopAlbums
 import com.roman.kubik.lastfm.api.model.TopAlbumsResponse
-import com.roman.kubik.lastfm.persistence.AlbumDao
+import com.roman.kubik.lastfm.repository.mapper.toAlbum
 import com.roman.kubik.lastfm.repository.model.Album
+import com.roman.kubik.lastfm.repository.model.Artist
 import com.roman.kubik.lastfm.repository.model.NetworkState
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.HttpException
 import retrofit2.Response
 
-class AlbumsDataSource constructor(private val restService: LastFmRestService, private val albumDao: AlbumDao, private val id: String) :
+class AlbumsDataSource constructor(private val restService: LastFmRestService, private val artist: Artist) :
     PageKeyedDataSource<Int, Album>() {
 
     private val networkData = MutableLiveData<NetworkState>()
@@ -26,7 +27,7 @@ class AlbumsDataSource constructor(private val restService: LastFmRestService, p
 
         loadTopAlbums(page, Consumer {
             networkData.value = NetworkState.LOADED
-            callback.onResult(it.albums.map(this::mapToRepositoryModel), 0, it.attributes!!.total, null, page + 1)
+            callback.onResult(it.albums.mapNotNull{a -> a.toAlbum(artist)}, 0, it.attributes!!.total, null, page + 1)
         })
     }
 
@@ -34,7 +35,7 @@ class AlbumsDataSource constructor(private val restService: LastFmRestService, p
         val page = params.key
 
         loadTopAlbums(page, Consumer {
-            callback.onResult(it.albums.map(this::mapToRepositoryModel),  page + 1)
+            callback.onResult(it.albums.mapNotNull{a -> a.toAlbum(artist)},  page + 1)
         })
     }
 
@@ -46,7 +47,7 @@ class AlbumsDataSource constructor(private val restService: LastFmRestService, p
     fun getNetworkState() = networkData
 
     private fun loadTopAlbums(page: Int, consumer: Consumer<TopAlbums>) {
-        restService.getTopAlbums(id, page).enqueue(object : Callback<TopAlbumsResponse> {
+        restService.getTopAlbums(artist.id, page).enqueue(object : Callback<TopAlbumsResponse> {
 
             override fun onResponse(call: Call<TopAlbumsResponse>, response: Response<TopAlbumsResponse>) {
                 if (response.isSuccessful) {
@@ -68,11 +69,5 @@ class AlbumsDataSource constructor(private val restService: LastFmRestService, p
 
         })
     }
-
-    private fun mapToRepositoryModel(album: AlbumModel) = Album(
-        album.name ?: "Unknown",
-        album.id ?: "Unknown",
-        album.images.firstOrNull()?.url
-    )
 
 }

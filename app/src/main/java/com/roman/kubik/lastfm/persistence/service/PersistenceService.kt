@@ -7,7 +7,9 @@ import com.roman.kubik.lastfm.repository.model.DatabaseState
 
 interface PersistenceService {
 
-    fun saveAlbum(artist: Artist, album: Album): LiveData<DatabaseState>
+    fun saveAlbum(album: Album): LiveData<DatabaseState>
 
-    fun deleteAlbum(artist: Artist, album: Album): LiveData<DatabaseState>
+    fun deleteAlbum(album: Album): LiveData<DatabaseState>
+
+    fun getAlbum(album: Album): LiveData<Album?>
 }

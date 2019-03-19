@@ -25,4 +25,8 @@ class DatabaseModule {
     @Provides
     @Singleton
     fun getAlbumDao(lastFmDatabase: LastFmDatabase) = lastFmDatabase.albumDao()
+
+    @Provides
+    @Singleton
+    fun getTrackDao(lastFmDatabase: LastFmDatabase) = lastFmDatabase.trackDao()
 }

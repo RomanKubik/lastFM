@@ -7,7 +7,7 @@ data class Artist(
     val name: String,
     val id: String,
     val imagePath: String?,
-    val albumList: ArrayList<Album> = ArrayList()
+    val albumList: List<Album> = ArrayList()
 ) : Parcelable {
 
     companion object {

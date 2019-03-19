@@ -10,5 +10,12 @@
     <fragment android:id="@+id/albumsFragment" android:name="com.roman.kubik.lastfm.ui.albums.AlbumsFragment"
               android:label="AlbumsFragment">
         <argument android:name="artist" app:argType="com.roman.kubik.lastfm.repository.model.Artist"/>
+        <action android:id="@+id/action_albumsFragment_to_albumDetailsFragment"
+                app:destination="@id/albumDetailsFragment"/>
+    </fragment>
+    <fragment android:id="@+id/albumDetailsFragment"
+              android:name="com.roman.kubik.lastfm.ui.details.AlbumDetailsFragment"
+              android:label="AlbumDetailsFragment">
+        <argument android:name="album" app:argType="com.roman.kubik.lastfm.repository.model.Album"/>
     </fragment>
 </navigation>
