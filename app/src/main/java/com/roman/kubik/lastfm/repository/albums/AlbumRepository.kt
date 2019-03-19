@@ -10,6 +10,8 @@ interface AlbumRepository {
 
     fun getTopAlbums(artist: Artist): Listing<Album>
 
+    fun getSavedAlbums(): LiveData<List<Album>>
+
     fun getAlbumDetails(album: Album): LiveData<Album>
 
     fun saveAlbum(album: Album)

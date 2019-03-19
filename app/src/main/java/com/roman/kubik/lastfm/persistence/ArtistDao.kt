@@ -16,6 +16,9 @@ interface ArtistDao {
     @Query("SELECT * FROM artist WHERE id = :id")
     fun getArtistById(id: String): LiveData<ArtistEntity>
 
+    @Query("SELECT * FROM artist INNER JOIN album ON artist.id = album.artistId WHERE :id = album.id")
+    fun getArtistByAlbumId(id: String): LiveData<ArtistEntity>
+
     @Insert(onConflict = IGNORE)
     fun insertArtist(artist: ArtistEntity)
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/main_nav_graph" app:startDestination="@id/searchFragment">
+            android:id="@+id/main_nav_graph" app:startDestination="@id/savedAlbumsFragment">
 
     <fragment android:id="@+id/searchFragment" android:name="com.roman.kubik.lastfm.ui.search.SearchFragment"
               android:label="SearchFragment">
@@ -17,5 +17,12 @@
               android:name="com.roman.kubik.lastfm.ui.details.AlbumDetailsFragment"
               android:label="AlbumDetailsFragment">
         <argument android:name="album" app:argType="com.roman.kubik.lastfm.repository.model.Album"/>
+    </fragment>
+    <fragment android:id="@+id/savedAlbumsFragment"
+              android:name="com.roman.kubik.lastfm.ui.savedAlbums.SavedAlbumsFragment"
+              android:label="SavedAlbumsFragment">
+        <action android:id="@+id/action_savedAlbumsFragment_to_searchFragment" app:destination="@id/searchFragment"/>
+        <action android:id="@+id/action_savedAlbumsFragment_to_albumDetailsFragment"
+                app:destination="@id/albumDetailsFragment"/>
     </fragment>
 </navigation>

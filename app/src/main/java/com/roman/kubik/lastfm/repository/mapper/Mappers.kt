@@ -71,7 +71,9 @@ fun ArtistModel.toArtist(albums: List<Album>): Artist? {
 
 fun TrackEntity.toTrack() = Track(id, name, duration, albumId)
 
-fun AlbumEntity.toAlbum() = Album(name, id, imagePath, null, true)
+fun AlbumEntity.toAlbum() = this.toAlbum(null)
+
+fun AlbumEntity.toAlbum(artist: ArtistEntity?) = Album(name, id, imagePath, artist?.toArtist(), true)
 
 fun ArtistEntity.toArtist() = Artist(name, id, imagePath)
 

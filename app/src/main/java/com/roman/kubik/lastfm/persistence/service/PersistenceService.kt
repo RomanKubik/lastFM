@@ -12,4 +12,6 @@ interface PersistenceService {
     fun deleteAlbum(album: Album)
 
     fun getAlbum(album: Album): LiveData<Album?>
+
+    fun getSavedAlbums(): LiveData<List<Album>>
 }

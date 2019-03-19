@@ -39,6 +39,8 @@ class AlbumRepositoryImpl @Inject constructor(
         return Listing(data, dataSource.getNetworkState())
     }
 
+    override fun getSavedAlbums() = persistenceService.getSavedAlbums()
+
     override fun getAlbumDetails(album: Album): LiveData<Album> {
         val albumData = MediatorLiveData<Album>()
         val repositoryData = persistenceService.getAlbum(album)

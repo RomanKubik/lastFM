@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.roman.kubik.lastfm.ui.albums.AlbumsViewModelImpl
 import com.roman.kubik.lastfm.ui.details.AlbumDetailsViewModelImpl
 import com.roman.kubik.lastfm.ui.main.MainViewModelImpl
+import com.roman.kubik.lastfm.ui.savedAlbums.SavedAlbumsViewModelImpl
 import com.roman.kubik.lastfm.ui.search.SearchViewModelImpl
 import dagger.Binds
 import dagger.Module
@@ -33,6 +34,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(AlbumDetailsViewModelImpl::class)
     abstract fun bindAlbumDetailsViewModel(viewModel: AlbumDetailsViewModelImpl): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SavedAlbumsViewModelImpl::class)
+    abstract fun bindSavedAlbumsViewModel(viewModel: SavedAlbumsViewModelImpl): ViewModel
 
     @Binds
     @Singleton

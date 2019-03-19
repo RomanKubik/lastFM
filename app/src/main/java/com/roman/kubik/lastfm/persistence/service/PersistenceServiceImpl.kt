@@ -2,12 +2,16 @@ package com.roman.kubik.lastfm.persistence.service
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.Transformations
 import com.roman.kubik.lastfm.persistence.AlbumDao
 import com.roman.kubik.lastfm.persistence.ArtistDao
 import com.roman.kubik.lastfm.persistence.TrackDao
+import com.roman.kubik.lastfm.persistence.model.AlbumEntity
+import com.roman.kubik.lastfm.persistence.model.ArtistEntity
 import com.roman.kubik.lastfm.persistence.model.TrackEntity
 import com.roman.kubik.lastfm.repository.mapper.*
 import com.roman.kubik.lastfm.repository.model.Album
+import com.roman.kubik.lastfm.repository.model.Artist
 import com.roman.kubik.lastfm.repository.model.Track
 import java.util.concurrent.Executors
 import javax.inject.Inject
@@ -48,22 +52,66 @@ class PersistenceServiceImpl @Inject constructor(
         }
     }
 
-    override fun getAlbum(album: Album): LiveData<Album?> {
-        val data = MediatorLiveData<Album>()
-        data.addSource(albumDao.getAlbumById(album.id)) {
-            if (it != null) {
-                val resultAlbum = it.toAlbum()
-                data.value = resultAlbum
-                data.addSource(artistDao.getArtistById(it.artistId)) { artist ->
-                    data.value = resultAlbum.copy(artist = artist?.toArtist())
+    override fun getAlbum(album: Album) = zipAlbumObject(
+        albumDao.getAlbumById(album.id),
+        artistDao.getArtistByAlbumId(album.id),
+        trackDao.getAlbumTracks(album.id)
+    )
+
+    override fun getSavedAlbums(): LiveData<List<Album>> {
+        val data = MediatorLiveData<List<Album>>()
+        data.addSource(albumDao.getAllAlbums()) {
+            if (!it.isNullOrEmpty()) {
+                val result = ArrayList<Album>()
+                for (album in it) {
+                    val source = artistDao.getArtistById(album.artistId)
+                    data.addSource(source) { artist ->
+                        data.removeSource(source)
+                        result.add(album.toAlbum(artist))
+                        data.value = result
+                    }
                 }
-                data.addSource(trackDao.getAlbumTracks(album.id)) { tracks ->
-                    data.value = resultAlbum.copy(tracks = tracks?.map(TrackEntity::toTrack) ?: ArrayList())
-                }
-            } else {
-                data.value = null
             }
         }
         return data
+    }
+
+    private fun zipAlbumObject(
+        a: LiveData<AlbumEntity>,
+        b: LiveData<ArtistEntity>,
+        c: LiveData<List<TrackEntity>>
+    ): LiveData<Album?> {
+        return MediatorLiveData<Album>().apply {
+            var lastA: AlbumEntity? = null
+            var lastB: ArtistEntity? = null
+            var lastC: List<TrackEntity>? = null
+
+            fun update() {
+                val localLastA = lastA
+                val localLastB = lastB
+                val localLastC = lastC
+                if (localLastA != null && localLastB != null && localLastC != null) {
+                    val album = localLastA.toAlbum(localLastB).copy(tracks = localLastC.map(TrackEntity::toTrack))
+                    this.value = album
+                }
+            }
+
+            addSource(a) {
+                lastA = it
+                if (it == null) {
+                    this.value = null
+                } else {
+                    update()
+                }
+            }
+            addSource(b) {
+                lastB = it
+                update()
+            }
+            addSource(c) {
+                lastC = it
+                update()
+            }
+        }
     }
 }
