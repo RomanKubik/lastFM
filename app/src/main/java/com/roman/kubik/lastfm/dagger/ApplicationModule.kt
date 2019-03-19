@@ -1,5 +1,7 @@
 package com.roman.kubik.lastfm.dagger
 
+import com.roman.kubik.lastfm.persistence.service.FileSaver
+import com.roman.kubik.lastfm.persistence.service.FileSaverImpl
 import com.roman.kubik.lastfm.persistence.service.PersistenceService
 import com.roman.kubik.lastfm.persistence.service.PersistenceServiceImpl
 import com.roman.kubik.lastfm.repository.albums.AlbumRepository
@@ -24,4 +26,8 @@ interface ApplicationModule {
     @Binds
     @Singleton
     fun getPersistanceService(persistenceService: PersistenceServiceImpl): PersistenceService
+
+    @Binds
+    @Singleton
+    fun getFileSaver(fileSaver: FileSaverImpl): FileSaver
 }

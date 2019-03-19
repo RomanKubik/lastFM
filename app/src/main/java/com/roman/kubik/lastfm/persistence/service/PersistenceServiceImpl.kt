@@ -5,17 +5,15 @@ import androidx.lifecycle.MediatorLiveData
 import com.roman.kubik.lastfm.persistence.AlbumDao
 import com.roman.kubik.lastfm.persistence.ArtistDao
 import com.roman.kubik.lastfm.persistence.TrackDao
-import com.roman.kubik.lastfm.persistence.model.AlbumEntity
-import com.roman.kubik.lastfm.persistence.model.ArtistEntity
 import com.roman.kubik.lastfm.persistence.model.TrackEntity
 import com.roman.kubik.lastfm.repository.mapper.*
 import com.roman.kubik.lastfm.repository.model.Album
-import com.roman.kubik.lastfm.repository.model.Artist
 import com.roman.kubik.lastfm.repository.model.Track
 import java.util.concurrent.Executors
 import javax.inject.Inject
 
 class PersistenceServiceImpl @Inject constructor(
+    private val fileSaver: FileSaver,
     private val artistDao: ArtistDao,
     private val albumDao: AlbumDao,
     private val trackDao: TrackDao
@@ -27,9 +25,12 @@ class PersistenceServiceImpl @Inject constructor(
     override fun saveAlbum(album: Album) {
         executor.execute {
             album.artist?.let { artist ->
+
+                val albumImagePath = fileSaver.loadFile(album.imagePath ?: "", album.id)
+                val artistImagePath = fileSaver.loadFile(artist.imagePath ?: "", artist.id)
                 artistDao.insertArtistAlbumAndTracks(
-                    artist.toArtistEntity(),
-                    album.toAlbumEntity(),
+                    artist.toArtistEntity(artistImagePath),
+                    album.toAlbumEntity(albumImagePath),
                     album.tracks.map(Track::toTrackEntity)
                 )
             }
@@ -39,8 +40,10 @@ class PersistenceServiceImpl @Inject constructor(
     override fun deleteAlbum(album: Album) {
         executor.execute {
             albumDao.deleteAlbum(album.toAlbumEntity())
+            fileSaver.deleteFile(album.imagePath)
             if (albumDao.getArtistAlbumsSync(album.artist!!.id).isNullOrEmpty()) {
                 artistDao.deleteArtist(album.artist.toArtistEntity())
+                fileSaver.deleteFile(album.artist.imagePath)
             }
         }
     }

@@ -16,9 +16,6 @@ interface ArtistDao {
     @Query("SELECT * FROM artist WHERE id = :id")
     fun getArtistById(id: String): LiveData<ArtistEntity>
 
-    @Query("SELECT * FROM artist WHERE id = :id")
-    fun getArtistByIdSync(id: String): ArtistEntity
-
     @Insert(onConflict = IGNORE)
     fun insertArtist(artist: ArtistEntity)
 

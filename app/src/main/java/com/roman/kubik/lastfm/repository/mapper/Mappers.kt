@@ -77,6 +77,10 @@ fun ArtistEntity.toArtist() = Artist(name, id, imagePath)
 
 fun Track.toTrackEntity() = TrackEntity(id, name, duration, albumId)
 
-fun Album.toAlbumEntity() = AlbumEntity(id, name, imagePath, artist!!.id)
+fun Album.toAlbumEntity() = this.toAlbumEntity(null)
 
-fun Artist.toArtistEntity() = ArtistEntity(id, name, imagePath)
+fun Artist.toArtistEntity() = this.toArtistEntity(null)
+
+fun Album.toAlbumEntity(imagePath: String?) = AlbumEntity(id, name, imagePath ?: this.imagePath, artist!!.id)
+
+fun Artist.toArtistEntity(imagePath: String?) = ArtistEntity(id, name, imagePath ?: this.imagePath)
