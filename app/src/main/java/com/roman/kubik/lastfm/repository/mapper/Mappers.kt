@@ -15,7 +15,7 @@ import kotlin.collections.ArrayList
 
 fun TrackModel.toTrack(albumId: String): Track? {
     return if (name != null) {
-        Track(UUID.randomUUID().toString(), name, albumId)
+        Track(UUID.randomUUID().toString(), name, duration ?: 0, albumId)
     } else {
         null
     }
@@ -69,7 +69,7 @@ fun ArtistModel.toArtist(albums: List<Album>): Artist? {
     }
 }
 
-fun TrackEntity.toTrack() = Track(id, name, albumId)
+fun TrackEntity.toTrack() = Track(id, name, duration, albumId)
 
 fun AlbumEntity.toAlbum() = Album(name, id, imagePath, null, true)
 

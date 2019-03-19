@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.roman.kubik.lastfm.R
 import com.roman.kubik.lastfm.repository.model.Album
@@ -17,6 +18,7 @@ import javax.inject.Inject
 class AlbumDetailsFragment: BaseFragment() {
 
     private val args: AlbumDetailsFragmentArgs by navArgs()
+    private val adapter = TracksAdapter()
 
     @Inject
     lateinit var viewModel: AlbumDetailsViewModel
@@ -27,10 +29,17 @@ class AlbumDetailsFragment: BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        setupView()
         setupAlbum(args.album)
         viewModel.getAlbumDetails(args.album).observe(this, Observer {
             setupAlbum(it)
         })
+    }
+
+    private fun setupView() {
+        val layoutManager = LinearLayoutManager(context)
+        detailsAlbumTrackList.layoutManager = layoutManager
+        detailsAlbumTrackList.adapter = adapter
     }
 
     private fun setupAlbum(album: Album) {
@@ -51,5 +60,6 @@ class AlbumDetailsFragment: BaseFragment() {
                 .placeholder(R.drawable.ic_music_note)
                 .into(detailsArtistImage)
         }
+        adapter.submitList(album.tracks)
     }
 }

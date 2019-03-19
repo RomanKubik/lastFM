@@ -10,9 +10,10 @@ data class AlbumModel(
 )
 
 data class TracksModel(
-    @SerializedName("tracks") val tracks: ArrayList<TrackModel> = ArrayList()
+    @SerializedName("track") val tracks: ArrayList<TrackModel> = ArrayList()
 )
 
 data class TrackModel(
-    @SerializedName("name") val name: String?
+    @SerializedName("name") val name: String?,
+    @SerializedName("duration") val duration: Long?
 )

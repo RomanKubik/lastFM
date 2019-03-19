@@ -4,9 +4,10 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class Track(
-    private val id: String,
-    private val name: String,
-    private val albumId: String
+    val id: String,
+    val name: String,
+    val duration: Long,
+    val albumId: String
 ): Parcelable {
 
     companion object {
@@ -20,12 +21,14 @@ data class Track(
     private constructor(parcel: Parcel) : this(
         id = parcel.readString()!!,
         name = parcel.readString()!!,
+        duration = parcel.readLong(),
         albumId = parcel.readString()!!
     )
 
     override fun writeToParcel(dest: Parcel, flags: Int) {
         dest.writeString(id)
         dest.writeString(name)
+        dest.writeLong(duration)
         dest.writeString(albumId)
     }
 
