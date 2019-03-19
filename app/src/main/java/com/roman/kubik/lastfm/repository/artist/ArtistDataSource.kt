@@ -26,7 +26,7 @@ class ArtistDataSource constructor(private val restService: LastFmRestService, p
 
         loadArtists(page, Consumer {
             networkData.value = NetworkState.LOADED
-            callback.onResult(it.artistMatches!!.artists.mapNotNull(ArtistModel::toArtist), 0, it.totalResults, null, page + 1)
+            callback.onResult(it.artistMatches!!.artists.map(ArtistModel::toArtist), 0, it.totalResults, null, page + 1)
         })
     }
 
@@ -34,7 +34,7 @@ class ArtistDataSource constructor(private val restService: LastFmRestService, p
         val page = params.key
 
         loadArtists(page, Consumer {
-            callback.onResult(it.artistMatches!!.artists.mapNotNull(ArtistModel::toArtist), page + 1)
+            callback.onResult(it.artistMatches!!.artists.map(ArtistModel::toArtist), page + 1)
         })
     }
 

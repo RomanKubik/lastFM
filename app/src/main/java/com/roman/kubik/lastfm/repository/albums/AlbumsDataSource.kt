@@ -27,7 +27,7 @@ class AlbumsDataSource constructor(private val restService: LastFmRestService, p
 
         loadTopAlbums(page, Consumer {
             networkData.value = NetworkState.LOADED
-            callback.onResult(it.albums.mapNotNull{a -> a.toAlbum(artist)}, 0, it.attributes!!.total, null, page + 1)
+            callback.onResult(it.albums.map{a -> a.toAlbum(artist)}, 0, it.attributes!!.total, null, page + 1)
         })
     }
 
@@ -35,7 +35,7 @@ class AlbumsDataSource constructor(private val restService: LastFmRestService, p
         val page = params.key
 
         loadTopAlbums(page, Consumer {
-            callback.onResult(it.albums.mapNotNull{a -> a.toAlbum(artist)},  page + 1)
+            callback.onResult(it.albums.map{a -> a.toAlbum(artist)},  page + 1)
         })
     }
 

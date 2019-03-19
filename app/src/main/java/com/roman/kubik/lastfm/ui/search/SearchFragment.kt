@@ -27,8 +27,8 @@ class SearchFragment : BaseFragment(), ArtistAdapterCallback {
         return inflater.inflate(R.layout.fragment_search, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         setupToolbar()
         setupRecyclerView()
         setupObservers()

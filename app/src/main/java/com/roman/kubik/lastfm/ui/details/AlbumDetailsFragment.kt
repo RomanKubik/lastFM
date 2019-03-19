@@ -31,8 +31,8 @@ class AlbumDetailsFragment: BaseFragment() {
         return inflater.inflate(R.layout.fragment_album_details, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         setupToolbar()
         setupView()
         setupAlbum(args.album)

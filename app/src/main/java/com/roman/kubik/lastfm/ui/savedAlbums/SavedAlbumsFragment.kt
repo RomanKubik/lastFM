@@ -27,8 +27,8 @@ class SavedAlbumsFragment: BaseFragment(), SavedAlbumsAdapterCallback {
         return inflater.inflate(R.layout.fragment_saved_albums, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         setupViews()
         viewModel.getSavedAlbums().observe(this, Observer {
             adapter.submitList(it)

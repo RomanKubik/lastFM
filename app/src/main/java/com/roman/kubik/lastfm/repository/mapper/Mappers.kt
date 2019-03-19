@@ -22,16 +22,16 @@ fun TrackModel.toTrack(albumId: String): Track? {
 }
 
 fun AlbumModel.toAlbum(artist: Artist?): Album? {
-    if (id != null && name != null) {
+    if (name != null) {
         val tracks: ArrayList<Track?> = ArrayList()
         if (this.tracks?.tracks != null) {
             for (t in this.tracks.tracks) {
-                tracks.add(t.toTrack(this.id))
+                tracks.add(t.toTrack(id ?: name))
             }
         }
         return Album(
             name = name,
-            id = id,
+            id = id ?: name,
             imagePath = images.firstOrNull()?.url,
             artist = artist,
             isLiked = false,
@@ -45,10 +45,10 @@ fun AlbumModel.toAlbum(artist: Artist?): Album? {
 fun AlbumModel.toAlbum() = this.toAlbum(null)
 
 fun ArtistModel.toArtist(): Artist? {
-    return if (id != null && name != null) {
+    return if (name != null) {
         Artist(
             name = name,
-            id = id,
+            id = id ?: name,
             imagePath = this.images?.firstOrNull()?.url
         )
     } else {
@@ -57,10 +57,10 @@ fun ArtistModel.toArtist(): Artist? {
 }
 
 fun ArtistModel.toArtist(albums: List<Album>): Artist? {
-    return if (id != null && name != null) {
+    return if (name != null) {
         Artist(
             name = name,
-            id = id,
+            id = id ?: name,
             imagePath = this.images?.firstOrNull()?.url,
             albumList = albums
         )
