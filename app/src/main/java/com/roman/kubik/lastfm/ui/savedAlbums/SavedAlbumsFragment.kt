@@ -31,6 +31,7 @@ class SavedAlbumsFragment: BaseFragment(), SavedAlbumsAdapterCallback {
         super.onViewCreated(view, savedInstanceState)
         setupViews()
         viewModel.getSavedAlbums().observe(this, Observer {
+            savedList.scheduleLayoutAnimation()
             adapter.submitList(it)
         })
     }

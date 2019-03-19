@@ -17,10 +17,11 @@
                 android:layout_height="wrap_content"/>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
+    <com.roman.kubik.lastfm.ui.view.AnimatedGridRecyclerView
             android:id="@+id/savedList"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layoutAnimation="@anim/grid_layout_animation"
             app:layout_constraintTop_toBottomOf="@+id/savedAppBar"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -30,6 +31,7 @@
             android:id="@+id/savedSearchButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/Fab"
             app:srcCompat="@drawable/ic_search"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>

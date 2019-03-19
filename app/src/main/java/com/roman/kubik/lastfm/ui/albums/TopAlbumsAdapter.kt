@@ -54,15 +54,15 @@ class TopAlbumsAdapter(private val callback: TopAlbumsAdapterCallback) :
                 this.album = album
                 Glide.with(itemView)
                     .load(album.imagePath)
-                    .error(R.drawable.ic_music_note)
-                    .placeholder(R.drawable.ic_music_note)
-                    .fitCenter()
+                    .error(R.drawable.ic_album)
+                    .placeholder(R.drawable.ic_album)
+                    .centerCrop()
                     .into(itemView.topAlbumImage)
                 itemView.topAlbumName.text = album.name
                 itemView.topAlbumItemStarred.setImageResource(if (album.isLiked) R.drawable.ic_star else R.drawable.ic_star_border)
             } else {
                 Glide.with(itemView)
-                    .load(R.drawable.ic_music_note)
+                    .load(R.drawable.ic_album)
                     .fitCenter()
                     .into(itemView.topAlbumImage)
                 itemView.topAlbumName.text = itemView.context.getText(R.string.loading)

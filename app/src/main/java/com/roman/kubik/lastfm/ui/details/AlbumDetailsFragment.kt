@@ -5,18 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.res.ResourcesCompat
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.roman.kubik.lastfm.R
 import com.roman.kubik.lastfm.repository.model.Album
-import com.roman.kubik.lastfm.repository.model.Artist
 import com.roman.kubik.lastfm.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_album_details.*
-import kotlinx.android.synthetic.main.fragment_search.*
 import javax.inject.Inject
 
 class AlbumDetailsFragment : BaseFragment() {
@@ -62,9 +58,9 @@ class AlbumDetailsFragment : BaseFragment() {
     private fun setupAlbum(album: Album) {
         Glide.with(this)
             .load(album.imagePath)
-            .error(R.drawable.ic_music_note)
-            .fitCenter()
-            .placeholder(R.drawable.ic_music_note)
+            .error(R.drawable.ic_album)
+            .centerCrop()
+            .placeholder(R.drawable.ic_album)
             .into(detailsAlbumImage)
         detailsAlbumName.text = album.name
         detailsTotalSonsCount.text = String.format(
@@ -76,7 +72,7 @@ class AlbumDetailsFragment : BaseFragment() {
             Glide.with(this)
                 .load(it.imagePath)
                 .error(R.drawable.ic_music_note)
-                .fitCenter()
+                .circleCrop()
                 .placeholder(R.drawable.ic_music_note)
                 .into(detailsArtistImage)
         }

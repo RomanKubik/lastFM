@@ -27,11 +27,11 @@
                 android:padding="@dimen/default_padding"
                 app:layout_constraintBottom_toBottomOf="parent">
 
-
             <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/savedArtistName"
+                    android:id="@+id/savedAlbumName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    style="@style/PrimaryLine"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -39,9 +39,10 @@
                     tools:text="@tools:sample/full_names"/>
 
             <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/savedAlbumName"
+                    android:id="@+id/savedArtistName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    style="@style/SecondaryLine"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"

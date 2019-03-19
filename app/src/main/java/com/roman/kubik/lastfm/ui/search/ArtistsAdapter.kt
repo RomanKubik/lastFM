@@ -51,7 +51,7 @@ class ArtistsAdapter(private val callback: ArtistAdapterCallback) :
                     .load(artist.imagePath)
                     .error(R.drawable.ic_music_note)
                     .placeholder(R.drawable.ic_music_note)
-                    .fitCenter()
+                    .circleCrop()
                     .into(itemView.artistAvatar)
                 itemView.artistName.text = artist.name
             } else {
