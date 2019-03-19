@@ -2,6 +2,7 @@ package com.roman.kubik.lastfm.repository.mapper
 
 import com.roman.kubik.lastfm.api.model.AlbumModel
 import com.roman.kubik.lastfm.api.model.ArtistModel
+import com.roman.kubik.lastfm.api.model.Image
 import com.roman.kubik.lastfm.api.model.TrackModel
 import com.roman.kubik.lastfm.persistence.model.AlbumEntity
 import com.roman.kubik.lastfm.persistence.model.ArtistEntity
@@ -32,7 +33,7 @@ fun AlbumModel.toAlbum(artist: Artist?): Album? {
         return Album(
             name = name,
             id = id ?: name,
-            imagePath = images.firstOrNull()?.url,
+            imagePath = getImageUrl(this.images),
             artist = artist,
             isLiked = false,
             tracks = tracks.filterNotNull()
@@ -49,7 +50,7 @@ fun ArtistModel.toArtist(): Artist? {
         Artist(
             name = name,
             id = id ?: name,
-            imagePath = this.images?.firstOrNull()?.url
+            imagePath = getImageUrl(this.images)
         )
     } else {
         null
@@ -61,12 +62,20 @@ fun ArtistModel.toArtist(albums: List<Album>): Artist? {
         Artist(
             name = name,
             id = id ?: name,
-            imagePath = this.images?.firstOrNull()?.url,
+            imagePath = getImageUrl(this.images),
             albumList = albums
         )
     } else {
         null
     }
+}
+
+fun getImageUrl(images: List<Image>?): String? {
+    return images?.find { it.size == Image.LARGE }?.url
+        ?: images?.find { it.size == Image.MEDIUM }?.url
+        ?: images?.find { it.size == Image.EXTRA_LARGE }?.url
+        ?: images?.find { it.size == Image.SMALL }?.url
+        ?: images?.find { it.size == Image.MEGA }?.url
 }
 
 fun TrackEntity.toTrack() = Track(id, name, duration, albumId)
