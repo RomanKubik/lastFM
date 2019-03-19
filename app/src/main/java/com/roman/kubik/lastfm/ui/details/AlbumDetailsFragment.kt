@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.fragment_album_details.*
 import kotlinx.android.synthetic.main.fragment_search.*
 import javax.inject.Inject
 
-class AlbumDetailsFragment: BaseFragment() {
+class AlbumDetailsFragment : BaseFragment() {
 
     private val args: AlbumDetailsFragmentArgs by navArgs()
     private val adapter = TracksAdapter()
@@ -67,7 +67,10 @@ class AlbumDetailsFragment: BaseFragment() {
             .placeholder(R.drawable.ic_music_note)
             .into(detailsAlbumImage)
         detailsAlbumName.text = album.name
-        detailsTotalSonsCount.text = album.tracks.size.toString()
+        detailsTotalSonsCount.text = String.format(
+            resources.getQuantityText(R.plurals.details_song_count, album.tracks.size).toString(),
+            album.tracks.size
+        )
         album.artist?.let {
             detailsArtistName.text = it.name
             Glide.with(this)

@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColor">@color/textColorPrimary</item>
     </style>
 
     <style name="Clickable" parent="AppTheme">
@@ -25,7 +26,7 @@
         <item name="android:paddingTop">@dimen/default_padding</item>
         <item name="android:paddingBottom">@dimen/default_padding</item>
     </style>
-    
+
     <style name="ListItem.SingleLine.Square">
         <item name="android:layout_height">@dimen/default_cell_height</item>
     </style>
@@ -40,4 +41,44 @@
         <item name="android:layout_height">@dimen/list_action_button_size</item>
     </style>
 
+    <style name="ListItem.SingleLine.NotClickable" parent="ListItem.SingleLine">
+        <item name="android:clickable">false</item>
+    </style>
+
+    <style name="ListImage" parent="AppTheme">
+        <item name="android:layout_width">@dimen/list_image_size</item>
+        <item name="android:layout_height">@dimen/list_image_size</item>
+    </style>
+
+    <style name="PrimaryLine" parent="AppTheme">
+        <item name="android:textSize">@dimen/primary_line_size</item>
+        <item name="android:textColor">@color/textColorPrimary</item>
+    </style>
+
+    <style name="SecondaryLine" parent="AppTheme">
+        <item name="android:textSize">@dimen/secondary_line_size</item>
+        <item name="android:textColor">@color/textColorSecondary</item>
+    </style>
+
+    <style name="Fab" parent="Widget.MaterialComponents.FloatingActionButton">
+        <item name="android:layout_margin">@dimen/default_margin</item>
+    </style>
+
+    <style name="AlbumName" parent="AppTheme">
+        <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/text_size_large_x</item>
+    </style>
+
+    <style name="AlbumArtist" parent="AppTheme">
+        <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="android:textSize">@dimen/secondary_line_size</item>
+    </style>
+
+    <style name="AlbumSongs" parent="AppTheme">
+        <item name="android:textColor">@color/textColorSecondary</item>
+        <item name="android:textSize">@dimen/secondary_line_size</item>
+    </style>
+
+    <style name="AlbumArtistImage" parent="ListImage"/>
 </resources>

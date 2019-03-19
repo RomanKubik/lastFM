@@ -13,4 +13,14 @@
 
     <dimen name="default_raw_item_height">200dp</dimen>
     <dimen name="list_action_button_size">24dp</dimen>
+    <dimen name="list_image_size">40dp</dimen>
+
+    <dimen name="text_size_small">14sp</dimen>
+    <dimen name="text_size_medium">16sp</dimen>
+    <dimen name="text_size_large">18sp</dimen>
+    <dimen name="text_size_large_x">20sp</dimen>
+    <dimen name="text_size_large_xx">24sp</dimen>
+
+    <dimen name="primary_line_size">@dimen/text_size_medium</dimen>
+    <dimen name="secondary_line_size">@dimen/text_size_small</dimen>
 </resources>

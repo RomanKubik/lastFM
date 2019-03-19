@@ -46,6 +46,8 @@
                     android:id="@+id/detailsAlbumName"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_margin="@dimen/default_margin"
+                    style="@style/AlbumName"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -53,8 +55,8 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/detailsArtistImage"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/AlbumArtistImage"
+                    android:layout_margin="@dimen/default_margin"
                     app:layout_constraintTop_toBottomOf="@+id/detailsAlbumName"
                     app:layout_constraintStart_toStartOf="parent"
                     tools:srcCompat="@tools:sample/avatars"/>
@@ -63,8 +65,11 @@
                     android:id="@+id/detailsArtistName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    style="@style/AlbumArtist"
+                    android:layout_marginLeft="@dimen/default_padding"
+                    android:layout_marginRight="@dimen/default_padding"
                     app:layout_constraintStart_toEndOf="@+id/detailsArtistImage"
-                    app:layout_constraintTop_toBottomOf="@+id/detailsAlbumName"
+                    app:layout_constraintTop_toTopOf="@+id/detailsArtistImage"
                     app:layout_constraintBottom_toTopOf="@+id/detailsTotalSonsCount"
                     app:layout_constraintVertical_chainStyle="packed"
                     tools:text="@tools:sample/first_names"/>
@@ -73,6 +78,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/detailsTotalSonsCount"
+                    style="@style/AlbumSongs"
+                    android:layout_marginLeft="@dimen/default_padding"
+                    android:layout_marginRight="@dimen/default_padding"
                     app:layout_constraintStart_toEndOf="@+id/detailsArtistImage"
                     app:layout_constraintBottom_toBottomOf="@+id/detailsArtistImage"
                     app:layout_constraintTop_toBottomOf="@+id/detailsArtistName"
@@ -82,6 +90,7 @@
                     android:id="@+id/detailsAlbumTrackList"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/default_margin"
                     app:layout_constraintTop_toBottomOf="@+id/detailsArtistImage"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -96,6 +105,7 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:src="@drawable/ic_star_border"
+            style="@style/Fab"
             app:layout_anchor="@id/detailsAppBar"
             app:layout_anchorGravity="bottom|right|end"/>
 

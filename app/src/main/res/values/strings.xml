@@ -8,4 +8,10 @@
     <string name="search_menu_item_search">Search</string>
     <string name="search_artists">Search artists</string>
 
+    <!-- Strings related to album details screen-->
+    <plurals name="details_song_count">
+        <item quantity="one">%d song</item>
+        <item quantity="other">%d songs</item>
+    </plurals>
+
 </resources>

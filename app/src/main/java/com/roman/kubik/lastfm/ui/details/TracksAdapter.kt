@@ -8,9 +8,10 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.roman.kubik.lastfm.R
 import com.roman.kubik.lastfm.repository.model.Track
+import com.roman.kubik.lastfm.ui.utils.getHumanReadableDuration
 import kotlinx.android.synthetic.main.item_track.view.*
 
-class TracksAdapter() : ListAdapter<Track, TracksAdapter.TrackViewHolder>(
+class TracksAdapter : ListAdapter<Track, TracksAdapter.TrackViewHolder>(
     object : DiffUtil.ItemCallback<Track>() {
         override fun areItemsTheSame(oldItem: Track, newItem: Track) = oldItem.id == newItem.id
 
@@ -31,7 +32,7 @@ class TracksAdapter() : ListAdapter<Track, TracksAdapter.TrackViewHolder>(
         fun bind(track: Track, position: Int) {
             itemView.trackNumber.text = (position + 1).toString()
             itemView.trackName.text = track.name
-            itemView.trackDuration.text = track.duration.toString()
+            itemView.trackDuration.text = getHumanReadableDuration(track.duration)
         }
     }
 }

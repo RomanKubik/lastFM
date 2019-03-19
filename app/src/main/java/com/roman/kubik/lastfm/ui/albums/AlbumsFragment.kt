@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -16,6 +17,7 @@ import com.roman.kubik.lastfm.repository.model.Album
 import com.roman.kubik.lastfm.repository.model.Status
 import com.roman.kubik.lastfm.ui.base.BaseFragment
 import com.roman.kubik.lastfm.ui.utils.GridColumnDecorator
+import kotlinx.android.synthetic.main.fragment_album_details.*
 import kotlinx.android.synthetic.main.fragment_top_albums.*
 import javax.inject.Inject
 
@@ -34,6 +36,7 @@ class AlbumsFragment : BaseFragment(), TopAlbumsAdapterCallback {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupToolbar()
         setupView()
         setupRecyclerView()
         setupObservers()
@@ -48,11 +51,20 @@ class AlbumsFragment : BaseFragment(), TopAlbumsAdapterCallback {
         albumsViewModel.saveAlbum(album)
     }
 
+    private fun setupToolbar() {
+        if (activity is AppCompatActivity) {
+            val act = activity as AppCompatActivity
+            act.setSupportActionBar(detailsToolbar)
+            act.supportActionBar?.title = "Details"
+            act.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        }
+    }
+
     private fun setupView() {
         Glide.with(this)
             .load(args.artist.imagePath)
             .error(R.drawable.ic_music_note)
-            .fitCenter()
+            .centerCrop()
             .placeholder(R.drawable.ic_music_note)
             .into(topAlbumsArtistImage)
     }
