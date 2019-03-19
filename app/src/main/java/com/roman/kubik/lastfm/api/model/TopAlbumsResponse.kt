@@ -7,7 +7,7 @@ data class TopAlbumsResponse(
 )
 
 data class TopAlbums(
-    @SerializedName("album") val albums: ArrayList<Album> = ArrayList(),
+    @SerializedName("album") val albums: ArrayList<AlbumModel> = ArrayList(),
     @SerializedName("@attr") val attributes: Attributes?
 )
 

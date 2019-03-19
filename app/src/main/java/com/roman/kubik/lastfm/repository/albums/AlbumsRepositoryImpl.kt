@@ -1,7 +1,6 @@
 package com.roman.kubik.lastfm.repository.albums
 
 import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.Transformations
 import androidx.paging.PagedList
 import com.roman.kubik.lastfm.api.LastFmRestService
 import com.roman.kubik.lastfm.api.LastFmRestService.Companion.DEFAULT_PAGE_SIZE
@@ -31,17 +30,6 @@ class AlbumsRepositoryImpl @Inject constructor(
 
         data.value = list
 
-        val cachedLiveData = Transformations.map(albumDao.getArtistAlbum(artistId)) {
-            val albums = ArrayList<Album>()
-            for (album in it)
-                albums.add(mapFromDbEntity(album))
-            albums
-        }
-
-        data.addSource(cachedLiveData) {
-            data.value?.addAll(it)
-        }
-
         return Listing(data, dataSource.getNetworkState())
     }
 
@@ -59,6 +47,4 @@ class AlbumsRepositoryImpl @Inject constructor(
             .build()
     }
 
-    private fun mapFromDbEntity(album: com.roman.kubik.lastfm.persistence.model.Album) =
-        Album(album.id, album.name, album.imagePath, true)
 }

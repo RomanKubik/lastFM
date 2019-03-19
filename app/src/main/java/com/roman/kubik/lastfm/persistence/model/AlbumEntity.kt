@@ -7,9 +7,9 @@ import androidx.room.PrimaryKey
 
 @Entity(
     tableName = "album",
-    foreignKeys = [ForeignKey(entity = Artist::class, parentColumns = ["id"], childColumns = ["artistId"])]
+    foreignKeys = [ForeignKey(entity = ArtistEntity::class, parentColumns = ["id"], childColumns = ["artistId"])]
 )
-data class Album(
+data class AlbumEntity(
     @PrimaryKey val id: String,
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "imagePath") val imagePath: String?,

@@ -6,22 +6,22 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.IGNORE
 import androidx.room.Query
-import com.roman.kubik.lastfm.persistence.model.Album
-import com.roman.kubik.lastfm.persistence.model.Artist
+import com.roman.kubik.lastfm.persistence.model.AlbumEntity
+import com.roman.kubik.lastfm.persistence.model.ArtistEntity
 
 @Dao
 interface ArtistDao {
 
     @Query("SELECT * FROM artist WHERE id = :id")
-    fun getArtistById(id: String): LiveData<Artist>
+    fun getArtistById(id: String): LiveData<ArtistEntity>
 
     @Insert(onConflict = IGNORE)
-    fun insertArtist(artist: Artist)
+    fun insertArtist(artist: ArtistEntity)
 
     @Insert(onConflict = IGNORE)
-    fun insertArtistAndAlbum(artist: Artist, album: Album)
+    fun insertArtistAndAlbum(artist: ArtistEntity, album: AlbumEntity)
 
     @Delete
-    fun deleteArtist(artist: Artist)
+    fun deleteArtist(artist: ArtistEntity)
 
 }

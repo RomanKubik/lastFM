@@ -12,10 +12,10 @@ data class Results(
 )
 
 data class Artists(
-    @SerializedName("artist") val artists: ArrayList<Artist> = ArrayList()
+    @SerializedName("artist") val artists: ArrayList<ArtistModel> = ArrayList()
 )
 
-data class Artist(
+data class ArtistModel(
     @SerializedName("name") val name: String?,
     @SerializedName("mbid") val id: String?,
     @SerializedName("image") val images: ArrayList<Image> = ArrayList()

@@ -4,6 +4,7 @@ import androidx.core.util.Consumer
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
 import com.roman.kubik.lastfm.api.LastFmRestService
+import com.roman.kubik.lastfm.api.model.AlbumModel
 import com.roman.kubik.lastfm.api.model.TopAlbums
 import com.roman.kubik.lastfm.api.model.TopAlbumsResponse
 import com.roman.kubik.lastfm.persistence.AlbumDao
@@ -68,7 +69,7 @@ class AlbumsDataSource constructor(private val restService: LastFmRestService, p
         })
     }
 
-    private fun mapToRepositoryModel(album: com.roman.kubik.lastfm.api.model.Album) = Album(
+    private fun mapToRepositoryModel(album: AlbumModel) = Album(
         album.name ?: "Unknown",
         album.id ?: "Unknown",
         album.images.firstOrNull()?.url

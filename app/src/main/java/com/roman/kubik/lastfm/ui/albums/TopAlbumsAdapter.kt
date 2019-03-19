@@ -42,13 +42,14 @@ class TopAlbumsAdapter(private val callback: TopAlbumsAdapterCallback) :
             }
             itemView.topAlbumItemStarred.setOnClickListener {
                 album?.let {
-                    callback.onAlbumSelected(it)
+                    callback.onAlbumLiked(it)
                 }
             }
         }
 
         fun bind(album: Album?) {
             if (album != null) {
+                this.album = album
                 Glide.with(itemView)
                     .load(album.imagePath)
                     .error(R.drawable.ic_music_note)
