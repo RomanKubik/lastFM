@@ -1,3 +1,24 @@
 <resources>
-    <string name="app_name">LastFM</string>
+    <string name="app_name">KubikFm</string>
+
+    <!-- Common strings-->
+    <string name="loading">Loading…</string>
+
+    <!-- Strings related to search screen-->
+    <string name="search_menu_item_search">Search</string>
+    <string name="search_artists">Search artists</string>
+    <string name="search_empty_state">Can\'t find artists</string>
+
+    <!-- Strings related to album details screen-->
+    <plurals name="details_song_count">
+        <item quantity="one">%d song</item>
+        <item quantity="other">%d songs</item>
+    </plurals>
+
+    <!-- String related to Saved albums screen-->
+    <string name="saved_empty_state">Your saved albums\nwill be displayed here</string>
+
+    <!-- Strings related to top albums screen-->
+    <string name="albums_empty_state">Can\'t find any albums</string>
+
 </resources>

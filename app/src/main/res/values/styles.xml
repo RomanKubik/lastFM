@@ -1,11 +1,100 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColor">@color/textColorPrimary</item>
     </style>
 
+    <style name="Clickable" parent="AppTheme">
+        <item name="android:background">?selectableItemBackground</item>
+        <item name="android:clickable">true</item>
+    </style>
+
+    <style name="ListItem" parent="Clickable">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:paddingLeft">@dimen/default_margin</item>
+        <item name="android:paddingRight">@dimen/default_margin</item>
+        <item name="android:paddingStart">@dimen/default_margin</item>
+        <item name="android:paddingEnd">@dimen/default_margin</item>
+    </style>
+
+    <style name="ListItem.SingleLine" parent="ListItem">
+        <item name="android:paddingTop">@dimen/default_padding</item>
+        <item name="android:paddingBottom">@dimen/default_padding</item>
+    </style>
+
+    <style name="ListItem.SingleLine.Square">
+        <item name="android:layout_height">@dimen/default_cell_height</item>
+    </style>
+
+    <style name="RawItem" parent="Clickable">
+        <item name="android:layout_height">@dimen/default_raw_item_height</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
+    <style name="ListActionButton" parent="Clickable">
+        <item name="android:layout_width">@dimen/list_action_button_size</item>
+        <item name="android:layout_height">@dimen/list_action_button_size</item>
+    </style>
+
+    <style name="ListItem.SingleLine.NotClickable" parent="ListItem.SingleLine">
+        <item name="android:clickable">false</item>
+    </style>
+
+    <style name="ListImage" parent="AppTheme">
+        <item name="android:layout_width">@dimen/list_image_size</item>
+        <item name="android:layout_height">@dimen/list_image_size</item>
+    </style>
+
+    <style name="PrimaryLine" parent="AppTheme">
+        <item name="android:textSize">@dimen/primary_line_size</item>
+        <item name="android:textColor">@color/textColorPrimary</item>
+    </style>
+
+    <style name="SecondaryLine" parent="AppTheme">
+        <item name="android:textSize">@dimen/secondary_line_size</item>
+        <item name="android:textColor">@color/textColorSecondary</item>
+    </style>
+
+    <style name="Fab" parent="Widget.MaterialComponents.FloatingActionButton">
+        <item name="android:layout_margin">@dimen/default_margin</item>
+    </style>
+
+    <style name="AlbumName" parent="AppTheme">
+        <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/text_size_large_x</item>
+    </style>
+
+    <style name="AlbumArtist" parent="AppTheme">
+        <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="android:textSize">@dimen/secondary_line_size</item>
+    </style>
+
+    <style name="AlbumSongs" parent="AppTheme">
+        <item name="android:textColor">@color/textColorSecondary</item>
+        <item name="android:textSize">@dimen/secondary_line_size</item>
+    </style>
+
+    <style name="AlbumArtistImage" parent="ListImage"/>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+
+    <style name="EmptyState" parent="AppTheme">
+        <item name="android:textSize">@dimen/text_size_large_x</item>
+        <item name="android:textColor">@color/textColorSecondary</item>
+        <item name="android:layout_margin">@dimen/default_margin_x2</item>
+        <item name="android:gravity">center</item>
+    </style>
 </resources>
