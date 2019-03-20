@@ -12,6 +12,7 @@ import com.roman.kubik.lastfm.R
 import com.roman.kubik.lastfm.repository.model.Artist
 import com.roman.kubik.lastfm.repository.model.Status
 import com.roman.kubik.lastfm.ui.base.BaseFragment
+import com.roman.kubik.lastfm.ui.utils.hideKeyboard
 import kotlinx.android.synthetic.main.fragment_saved_albums.*
 import kotlinx.android.synthetic.main.fragment_search.*
 import kotlinx.android.synthetic.main.fragment_top_albums.*
@@ -43,6 +44,7 @@ class SearchFragment : BaseFragment(), ArtistAdapterCallback {
         searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 searchViewModel.search(query)
+                hideKeyboard()
                 return true
             }
 
@@ -50,6 +52,7 @@ class SearchFragment : BaseFragment(), ArtistAdapterCallback {
                 return false
             }
         })
+        menuItem?.expandActionView()
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -60,6 +63,7 @@ class SearchFragment : BaseFragment(), ArtistAdapterCallback {
     }
 
     override fun onArtistSelected(artist: Artist) {
+        hideKeyboard()
         val direction =
             SearchFragmentDirections.actionSearchFragmentToAlbumsFragment(artist)
         findNavController().navigate(direction)

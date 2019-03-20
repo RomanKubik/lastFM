@@ -39,6 +39,7 @@
             <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/topAlbumItemStarred"
                     style="@style/ListActionButton"
+                    android:visibility="gone"
                     app:srcCompat="@drawable/ic_star_border"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"

@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -18,7 +17,6 @@ import com.roman.kubik.lastfm.repository.model.Album
 import com.roman.kubik.lastfm.repository.model.Status
 import com.roman.kubik.lastfm.ui.base.BaseFragment
 import com.roman.kubik.lastfm.ui.utils.GridColumnDecorator
-import kotlinx.android.synthetic.main.fragment_album_details.*
 import kotlinx.android.synthetic.main.fragment_search.*
 import kotlinx.android.synthetic.main.fragment_top_albums.*
 import javax.inject.Inject
