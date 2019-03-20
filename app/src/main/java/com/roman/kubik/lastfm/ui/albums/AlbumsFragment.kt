@@ -2,6 +2,7 @@ package com.roman.kubik.lastfm.ui.albums
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -46,6 +47,13 @@ class AlbumsFragment : BaseFragment(), TopAlbumsAdapterCallback {
         setupRecyclerView()
     }
 
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            android.R.id.home -> findNavController().popBackStack()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun onAlbumSelected(album: Album) {
         val direction = AlbumsFragmentDirections.actionAlbumsFragmentToAlbumDetailsFragment(album)
         findNavController().navigate(direction)
@@ -58,6 +66,7 @@ class AlbumsFragment : BaseFragment(), TopAlbumsAdapterCallback {
     private fun setupToolbar() {
         if (activity is AppCompatActivity) {
             val act = activity as AppCompatActivity
+            setHasOptionsMenu(true)
             act.setSupportActionBar(topAlbumsToolbar)
             act.supportActionBar?.title = args.artist.name
             act.supportActionBar?.setDisplayHomeAsUpEnabled(true)

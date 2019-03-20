@@ -2,10 +2,12 @@ package com.roman.kubik.lastfm.ui.details
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -37,9 +39,17 @@ class AlbumDetailsFragment : BaseFragment() {
         })
     }
 
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            android.R.id.home -> findNavController().popBackStack()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     private fun setupToolbar() {
         if (activity is AppCompatActivity) {
             val act = activity as AppCompatActivity
+            setHasOptionsMenu(true)
             act.setSupportActionBar(detailsToolbar)
             act.supportActionBar?.title = null
             act.supportActionBar?.setDisplayHomeAsUpEnabled(true)

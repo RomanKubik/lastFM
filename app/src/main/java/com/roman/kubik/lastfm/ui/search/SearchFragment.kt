@@ -50,6 +50,13 @@ class SearchFragment : BaseFragment(), ArtistAdapterCallback {
         })
     }
 
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            android.R.id.home -> findNavController().popBackStack()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun onArtistSelected(artist: Artist) {
         val direction =
             SearchFragmentDirections.actionSearchFragmentToAlbumsFragment(artist)
