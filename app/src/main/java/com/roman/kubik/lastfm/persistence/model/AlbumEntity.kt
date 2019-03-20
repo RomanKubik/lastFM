@@ -19,5 +19,6 @@ data class AlbumEntity(
     @PrimaryKey val id: String,
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "imagePath") val imagePath: String?,
-    @ColumnInfo(name = "artistId") val artistId: String
-)
+    @ColumnInfo(name = "artistId") val artistId: String,
+    @ColumnInfo(name = "imageUrl") val imageUrl: String?
+    )

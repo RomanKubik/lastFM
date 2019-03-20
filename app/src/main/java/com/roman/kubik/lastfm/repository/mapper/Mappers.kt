@@ -33,10 +33,11 @@ fun AlbumModel.toAlbum(artist: Artist?): Album? {
         return Album(
             name = name,
             id = id ?: name,
-            imagePath = getImageUrl(this.images),
+            imagePath = null,
             artist = artist,
             isLiked = false,
-            tracks = tracks.filterNotNull()
+            tracks = tracks.filterNotNull(),
+            imageUrl = getImageUrl(this.images)
         )
     } else {
         return null
@@ -50,7 +51,8 @@ fun ArtistModel.toArtist(): Artist? {
         Artist(
             name = name,
             id = id ?: name,
-            imagePath = getImageUrl(this.images)
+            imagePath = null,
+            imageUrl = getImageUrl(this.images)
         )
     } else {
         null
@@ -62,8 +64,9 @@ fun ArtistModel.toArtist(albums: List<Album>): Artist? {
         Artist(
             name = name,
             id = id ?: name,
-            imagePath = getImageUrl(this.images),
-            albumList = albums
+            imagePath = null,
+            albumList = albums,
+            imageUrl = getImageUrl(this.images)
         )
     } else {
         null
@@ -82,9 +85,9 @@ fun TrackEntity.toTrack() = Track(id, name, duration, albumId)
 
 fun AlbumEntity.toAlbum() = this.toAlbum(null)
 
-fun AlbumEntity.toAlbum(artist: ArtistEntity?) = Album(name, id, imagePath, artist?.toArtist(), true)
+fun AlbumEntity.toAlbum(artist: ArtistEntity?) = Album(name, id, imagePath, artist?.toArtist(), true, imageUrl = imageUrl)
 
-fun ArtistEntity.toArtist() = Artist(name, id, imagePath)
+fun ArtistEntity.toArtist() = Artist(name, id, imagePath, imageUrl = imageUrl)
 
 fun Track.toTrackEntity() = TrackEntity(id, name, duration, albumId)
 
@@ -92,6 +95,6 @@ fun Album.toAlbumEntity() = this.toAlbumEntity(null)
 
 fun Artist.toArtistEntity() = this.toArtistEntity(null)
 
-fun Album.toAlbumEntity(imagePath: String?) = AlbumEntity(id, name, imagePath ?: this.imagePath, artist!!.id)
+fun Album.toAlbumEntity(imagePath: String?) = AlbumEntity(id, name, imagePath ?: this.imagePath, artist!!.id, imageUrl = imageUrl)
 
-fun Artist.toArtistEntity(imagePath: String?) = ArtistEntity(id, name, imagePath ?: this.imagePath)
+fun Artist.toArtistEntity(imagePath: String?) = ArtistEntity(id, name, imagePath ?: this.imagePath, imageUrl)

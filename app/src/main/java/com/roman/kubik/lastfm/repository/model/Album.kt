@@ -9,7 +9,8 @@ data class Album(
     val imagePath: String?,
     val artist: Artist?,
     val isLiked: Boolean = false,
-    val tracks: List<Track> = ArrayList()
+    val tracks: List<Track> = ArrayList(),
+    val imageUrl: String?
 ): Parcelable {
 
     companion object {
@@ -26,7 +27,8 @@ data class Album(
         imagePath = parcel.readString(),
         artist = parcel.readParcelable(Artist::class.java.classLoader)!!,
         isLiked = parcel.readInt() != 0,
-        tracks = parcel.readArrayList(Track::class.java.classLoader) as ArrayList<Track>
+        tracks = parcel.readArrayList(Track::class.java.classLoader) as ArrayList<Track>,
+        imageUrl = parcel.readString()
     )
 
     override fun writeToParcel(dest: Parcel, flags: Int) {
@@ -36,8 +38,11 @@ data class Album(
         dest.writeParcelable(artist, flags)
         dest.writeInt(if (isLiked) 1 else 0)
         dest.writeList(tracks)
+        dest.writeString(imageUrl)
     }
 
     override fun describeContents() = 0
+
+    fun getImage(): String? = imagePath ?: imageUrl
 
 }

@@ -53,7 +53,7 @@ class TopAlbumsAdapter(private val callback: TopAlbumsAdapterCallback) :
             if (album != null) {
                 this.album = album
                 Glide.with(itemView)
-                    .load(album.imagePath)
+                    .load(album.getImage())
                     .error(R.drawable.ic_album)
                     .placeholder(R.drawable.ic_album)
                     .centerCrop()

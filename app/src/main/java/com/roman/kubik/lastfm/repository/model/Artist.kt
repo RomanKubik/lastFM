@@ -7,7 +7,8 @@ data class Artist(
     val name: String,
     val id: String,
     val imagePath: String?,
-    val albumList: List<Album> = ArrayList()
+    val albumList: List<Album> = ArrayList(),
+    val imageUrl: String?
 ) : Parcelable {
 
     companion object {
@@ -22,7 +23,8 @@ data class Artist(
         name = parcel.readString()!!,
         id = parcel.readString()!!,
         imagePath = parcel.readString(),
-        albumList = parcel.readArrayList(Album::class.java.classLoader) as ArrayList<Album>
+        albumList = parcel.readArrayList(Album::class.java.classLoader) as ArrayList<Album>,
+        imageUrl = parcel.readString()
     )
 
     override fun writeToParcel(dest: Parcel, flags: Int) {
@@ -30,7 +32,11 @@ data class Artist(
         dest.writeString(id)
         dest.writeString(imagePath)
         dest.writeList(albumList)
+        dest.writeString(imageUrl)
     }
 
     override fun describeContents() = 0
+
+    fun getImage(): String? = imagePath ?: imageUrl
+
 }

@@ -75,7 +75,7 @@ class AlbumsFragment : BaseFragment(), TopAlbumsAdapterCallback {
 
     private fun setupView() {
         Glide.with(this)
-            .load(args.artist.imagePath)
+            .load(args.artist.getImage())
             .error(R.drawable.ic_music_note)
             .centerCrop()
             .placeholder(R.drawable.ic_music_note)

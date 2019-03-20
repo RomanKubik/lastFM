@@ -3,6 +3,7 @@ package com.roman.kubik.lastfm.repository.albums
 import androidx.core.util.Consumer
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagedList
 import com.roman.kubik.lastfm.api.LastFmRestService
 import com.roman.kubik.lastfm.api.LastFmRestService.Companion.DEFAULT_PAGE_SIZE

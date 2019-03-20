@@ -48,7 +48,7 @@ class ArtistsAdapter(private val callback: ArtistAdapterCallback) :
             this.artist = artist
             if (artist != null) {
                 Glide.with(itemView)
-                    .load(artist.imagePath)
+                    .load(artist.getImage())
                     .error(R.drawable.ic_music_note)
                     .placeholder(R.drawable.ic_music_note)
                     .circleCrop()

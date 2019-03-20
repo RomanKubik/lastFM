@@ -67,7 +67,7 @@ class AlbumDetailsFragment : BaseFragment() {
 
     private fun setupAlbum(album: Album) {
         Glide.with(this)
-            .load(album.imagePath)
+            .load(album.getImage())
             .error(R.drawable.ic_album)
             .centerCrop()
             .placeholder(R.drawable.ic_album)
@@ -80,7 +80,7 @@ class AlbumDetailsFragment : BaseFragment() {
         album.artist?.let {
             detailsArtistName.text = it.name
             Glide.with(this)
-                .load(it.imagePath)
+                .load(it.getImage())
                 .error(R.drawable.ic_music_note)
                 .circleCrop()
                 .placeholder(R.drawable.ic_music_note)

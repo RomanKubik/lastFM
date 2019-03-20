@@ -29,8 +29,8 @@ class PersistenceServiceImpl @Inject constructor(
         executor.execute {
             album.artist?.let { artist ->
 
-                val albumImagePath = fileSaver.loadFile(album.imagePath ?: "", album.id)
-                val artistImagePath = fileSaver.loadFile(artist.imagePath ?: "", artist.id)
+                val albumImagePath = fileSaver.loadFile(album.imageUrl ?: "", album.id)
+                val artistImagePath = fileSaver.loadFile(artist.imageUrl ?: "", artist.id)
                 artistDao.insertArtistAlbumAndTracks(
                     artist.toArtistEntity(artistImagePath),
                     album.toAlbumEntity(albumImagePath),

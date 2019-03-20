@@ -47,7 +47,7 @@ class SavedAlbumsAdapter(private val callback: SavedAlbumsAdapterCallback) :
             itemView.savedArtistName.text = album.artist?.name
             itemView.savedAlbumName.text = album.name
             Glide.with(itemView)
-                .load(album.imagePath)
+                .load(album.getImage())
                 .error(R.drawable.ic_album)
                 .placeholder(R.drawable.ic_album)
                 .centerCrop()
