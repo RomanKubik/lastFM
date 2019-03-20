@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide
 import com.roman.kubik.lastfm.R
 import com.roman.kubik.lastfm.repository.model.Album
 import com.roman.kubik.lastfm.ui.base.BaseFragment
+import com.roman.kubik.lastfm.ui.utils.debounceView
 import kotlinx.android.synthetic.main.fragment_album_details.*
 import javax.inject.Inject
 
@@ -61,6 +62,7 @@ class AlbumDetailsFragment : BaseFragment() {
         detailsAlbumTrackList.layoutManager = layoutManager
         detailsAlbumTrackList.adapter = adapter
         detailsSave.setOnClickListener {
+            debounceView(it)
             viewModel.saveAlbum()
         }
     }
