@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
@@ -23,15 +24,31 @@ class SavedAlbumsFragment: BaseFragment(), SavedAlbumsAdapterCallback {
     @Inject
     lateinit var viewModel: SavedAlbumsViewModel
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setupObservers()
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_saved_albums, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupToolbar()
         setupViews()
+    }
+
+    private fun setupToolbar() {
+        if (activity is AppCompatActivity) {
+            val act = activity as AppCompatActivity
+            act.setSupportActionBar(savedToolbar)
+        }
+    }
+
+    private fun setupObservers() {
         viewModel.getSavedAlbums().observe(this, Observer {
-            savedList.scheduleLayoutAnimation()
+            savedList?.scheduleLayoutAnimation()
             adapter.submitList(it)
         })
     }
