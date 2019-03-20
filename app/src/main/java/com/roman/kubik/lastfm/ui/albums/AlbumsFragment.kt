@@ -30,6 +30,11 @@ class AlbumsFragment : BaseFragment(), TopAlbumsAdapterCallback {
 
     private val adapter = TopAlbumsAdapter(this)
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setupObservers()
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_top_albums, container, false)
     }
@@ -39,7 +44,6 @@ class AlbumsFragment : BaseFragment(), TopAlbumsAdapterCallback {
         setupToolbar()
         setupView()
         setupRecyclerView()
-        setupObservers()
     }
 
     override fun onAlbumSelected(album: Album) {
@@ -79,9 +83,9 @@ class AlbumsFragment : BaseFragment(), TopAlbumsAdapterCallback {
     private fun setupObservers() {
         albumsViewModel.getNetworkState().observe(this, Observer {
             when (it.status) {
-                Status.RUNNING -> topAlbumsProgress.visibility = View.VISIBLE
-                Status.SUCCESS -> topAlbumsProgress.visibility = View.GONE
-                Status.FAILED -> topAlbumsProgress.visibility = View.GONE
+                Status.RUNNING -> topAlbumsProgress?.visibility = View.VISIBLE
+                Status.SUCCESS -> topAlbumsProgress?.visibility = View.GONE
+                Status.FAILED -> topAlbumsProgress?.visibility = View.GONE
             }
         })
         albumsViewModel.getTopAlbums(args.artist).observe(this, Observer {
