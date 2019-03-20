@@ -41,7 +41,6 @@ class AlbumDetailsFragment : BaseFragment() {
         if (activity is AppCompatActivity) {
             val act = activity as AppCompatActivity
             act.setSupportActionBar(detailsToolbar)
-            act.supportActionBar?.title = "Details"
             act.supportActionBar?.setDisplayHomeAsUpEnabled(true)
         }
     }

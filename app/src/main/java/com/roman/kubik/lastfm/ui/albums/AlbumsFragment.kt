@@ -58,8 +58,8 @@ class AlbumsFragment : BaseFragment(), TopAlbumsAdapterCallback {
     private fun setupToolbar() {
         if (activity is AppCompatActivity) {
             val act = activity as AppCompatActivity
-            act.setSupportActionBar(detailsToolbar)
-            act.supportActionBar?.title = "Details"
+            act.setSupportActionBar(topAlbumsToolbar)
+            act.supportActionBar?.title = args.artist.name
             act.supportActionBar?.setDisplayHomeAsUpEnabled(true)
         }
     }
