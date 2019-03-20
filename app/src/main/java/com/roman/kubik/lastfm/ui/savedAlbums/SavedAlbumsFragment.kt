@@ -48,6 +48,7 @@ class SavedAlbumsFragment: BaseFragment(), SavedAlbumsAdapterCallback {
 
     private fun setupObservers() {
         viewModel.getSavedAlbums().observe(this, Observer {
+            savedEmptyState?.visibility = if (it.isNullOrEmpty()) View.VISIBLE else View.GONE
             savedList?.scheduleLayoutAnimation()
             adapter.submitList(it)
         })

@@ -11,7 +11,5 @@ data class Listing<T>(
     /** The LiveData of paged lists for the UI to observe. */
     val pagedList: LiveData<PagedList<T>>,
     /** Represents the network request status to show to the user. */
-    val networkState: LiveData<NetworkState>,
-    /** Represents the database request status to show to the user. */
-    val databaseState: LiveData<DatabaseState> = MutableLiveData()
+    val networkState: LiveData<NetworkState>
 )

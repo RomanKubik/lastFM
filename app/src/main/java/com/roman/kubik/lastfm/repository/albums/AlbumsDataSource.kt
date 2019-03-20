@@ -26,7 +26,7 @@ class AlbumsDataSource constructor(private val restService: LastFmRestService, p
         val page = 1
 
         loadTopAlbums(page, Consumer {
-            networkData.value = NetworkState.LOADED
+            networkData.value = if (it?.attributes?.total != 0) NetworkState.LOADED else NetworkState.NO_DATA
             callback.onResult(it.albums.map{a -> a.toAlbum(artist)}, 0, it.attributes!!.total, null, page + 1)
         })
     }

@@ -19,6 +19,7 @@ import com.roman.kubik.lastfm.repository.model.Status
 import com.roman.kubik.lastfm.ui.base.BaseFragment
 import com.roman.kubik.lastfm.ui.utils.GridColumnDecorator
 import kotlinx.android.synthetic.main.fragment_album_details.*
+import kotlinx.android.synthetic.main.fragment_search.*
 import kotlinx.android.synthetic.main.fragment_top_albums.*
 import javax.inject.Inject
 
@@ -92,9 +93,22 @@ class AlbumsFragment : BaseFragment(), TopAlbumsAdapterCallback {
     private fun setupObservers() {
         albumsViewModel.getNetworkState().observe(this, Observer {
             when (it.status) {
-                Status.RUNNING -> topAlbumsProgress?.visibility = View.VISIBLE
-                Status.SUCCESS -> topAlbumsProgress?.visibility = View.GONE
-                Status.FAILED -> topAlbumsProgress?.visibility = View.GONE
+                Status.RUNNING -> {
+                    topAlbumsProgress.visibility = View.VISIBLE
+                    albumsEmptyState?.visibility = View.GONE
+                }
+                Status.SUCCESS -> {
+                    topAlbumsProgress.visibility = View.GONE
+                    searchEmptyState?.visibility = View.GONE
+                }
+                Status.FAILED -> {
+                    topAlbumsProgress.visibility = View.GONE
+                    albumsEmptyState?.visibility = View.VISIBLE
+                }
+                Status.EMPTY -> {
+                    topAlbumsProgress.visibility = View.GONE
+                    albumsEmptyState?.visibility = View.VISIBLE
+                }
             }
         })
         albumsViewModel.getTopAlbums(args.artist).observe(this, Observer {

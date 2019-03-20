@@ -25,7 +25,7 @@ class ArtistDataSource constructor(private val restService: LastFmRestService, p
         val page = 1
 
         loadArtists(page, Consumer {
-            networkData.value = NetworkState.LOADED
+            networkData.value = if (it?.totalResults != 0) NetworkState.LOADED else NetworkState.NO_DATA
             callback.onResult(it.artistMatches!!.artists.map(ArtistModel::toArtist), 0, it.totalResults, null, page + 1)
         })
     }

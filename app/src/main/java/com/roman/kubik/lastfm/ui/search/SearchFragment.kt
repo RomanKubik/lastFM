@@ -12,7 +12,9 @@ import com.roman.kubik.lastfm.R
 import com.roman.kubik.lastfm.repository.model.Artist
 import com.roman.kubik.lastfm.repository.model.Status
 import com.roman.kubik.lastfm.ui.base.BaseFragment
+import kotlinx.android.synthetic.main.fragment_saved_albums.*
 import kotlinx.android.synthetic.main.fragment_search.*
+import kotlinx.android.synthetic.main.fragment_top_albums.*
 import javax.inject.Inject
 
 
@@ -89,9 +91,22 @@ class SearchFragment : BaseFragment(), ArtistAdapterCallback {
         })
         searchViewModel.getNetworkState().observe(this, Observer {
             when (it.status) {
-                Status.RUNNING -> searchProgress.visibility = View.VISIBLE
-                Status.SUCCESS -> searchProgress.visibility = View.GONE
-                Status.FAILED -> searchProgress.visibility = View.GONE
+                Status.RUNNING -> {
+                    searchProgress.visibility = View.VISIBLE
+                    searchEmptyState?.visibility = View.GONE
+                }
+                Status.SUCCESS -> {
+                    searchProgress.visibility = View.GONE
+                    searchEmptyState?.visibility = View.GONE
+                }
+                Status.FAILED -> {
+                    searchProgress.visibility = View.GONE
+                    searchEmptyState?.visibility = View.VISIBLE
+                }
+                Status.EMPTY -> {
+                    searchProgress.visibility = View.GONE
+                    searchEmptyState?.visibility = View.VISIBLE
+                }
             }
         })
     }
